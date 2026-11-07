@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web3 Agent Lab · 教学实验室</title>
+<link rel="stylesheet" href="/lab.css">
+<script type="module" src="/lab.js"></script>
+</head>
+<body>
+<header class="top"><a class="brand" href="#welcome">Web3 Agent Lab</a><nav aria-label="主导航"><a href="#welcome">实验室地图</a><a href="#market">市场回放</a><a href="#evidence">链上证据</a><a href="#labs">数学实验</a><a href="#course">八周课程</a></nav></header>
+<main>
+<section id="welcome" class="hero">
+<p class="eyebrow">本地实验链 · 中文课程 · 交易证据</p>
+<h1>从一笔交易看懂 Web3</h1>
+<p class="lead">让几个交易角色在本机买卖，看价格如何随池子里的两种测试币改变。跟着时间轴，从一条样例新闻找到决策、风控和真实的 Anvil 交易回执。</p>
+<p>钱包是持有资产的账户。<strong>RISK</strong> 是实验中的风险代币，<strong>sUSD</strong> 是记账用的测试币。智能合约是在链上执行的程序，交易池用两种代币的储备算出兑换数量。本地链让每一步都可复查，资产没有真实价值。</p>
+<a class="primary" href="/?run=first-100#market">打开 100 轮回放</a> <a href="#lab-amm">先做一次兑换预测 →</a>
+<div id="map" aria-label="实验数据流"></div>
+<div id="map-detail" class="inset" aria-live="polite"></div>
+</section>
+<section id="market">
+<p class="eyebrow">01 / 市场观察</p>
+<h2>按轮回放</h2>
+<p>一根 K 线概括一轮里实际成交的开、高、低、收。灰蓝虚线为合成参考价；空轮没有 K 线。成交量以 RISK 计，买入时计算收到的 RISK，卖出时计算交出的 RISK。</p>
+<div class="controls">
+<label>实验 <select id="run"></select></label>
+<label>买卖点角色 <select id="role"></select></label>
+<label>窗口 <select id="window"><option>40</option><option selected>100</option><option>200</option></select></label>
+<label>速度 <select id="speed"><option value="950">慢</option><option value="350" selected>中</option><option value="100">快</option></select></label>
+</div>
+<div class="controls">
+<button id="back">上一轮</button><button id="play">播放</button><button id="next">前进一轮</button>
+<input id="clock" type="range" min="0" value="0" aria-label="回放轮次"><output id="clock-label"></output>
+</div>
+<p id="market-status" role="status"></p>
+<div class="legend"><span>▲ 买入 RISK</span><span>▼ 卖出 RISK</span><span>◆ 新闻</span><span>柱形为成交量</span></div>
+<div class="scroller"><svg id="chart" viewBox="0 0 1000 336" aria-label="真实成交 K 线与成交量"></svg></div>
+<p id="hover" class="hint">点击任一轮的 K 线或空轮区域，可查看当轮所有角色决策。</p>
+<div class="scroller"><table><thead><tr><th>角色</th><th>RISK</th><th>sUSD</th><th>参考价净值</th><th>累计最大回撤</th></tr></thead><tbody id="positions"></tbody></table></div>
+<div class="scroller"><svg id="nav-chart" viewBox="0 0 1000 152" aria-label="各角色净值，随当前窗口更新"></svg></div>
+<details><summary>实验并排对照</summary>
+<label>对照档案 <select id="compare"></select></label><div id="comparison"></div>
+</details>
+</section>
+<section id="evidence">
+<p class="eyebrow">02 / 查账</p>
+<h2>交易与区块浏览器</h2>
+<p>风控拒单（Risk Rejection）发生在提交之前，不会有交易哈希。链上回退（Revert）有失败回执，状态恢复仍消耗 Gas。原始示例见 <button id="revert-example">查看集成测试回退</button>。</p>
+<div class="controls">
+<button id="setup">部署与注资</button>
+<form id="find"><label>事件 ID 或交易哈希 <input id="key" placeholder="E000067"></label><button>定位</button></form>
+<label>事件类型 <select id="kind"><option value="">全部</option><option value="decision">决策</option><option value="receipt">回执</option><option value="risk">风控</option><option value="news">新闻</option></select></label>
+</div>
+<p id="lookup-status" role="status"></p>
+<details id="contracts"><summary>合约地址、钱包和初始余额</summary><div id="addresses"></div></details>
+<div class="split"><div><h3 id="event-title">轮次事件</h3><ul id="event-list"></ul></div>
+<div class="inset"><h3 id="event-name">选择一条事件</h3><div id="event-body"></div><div id="related" class="controls"></div>
+<details id="raw-details"><summary>原始 JSON</summary><pre id="raw"></pre></details></div></div>
+<p id="run-files"></p>
+</section>
+<section id="labs">
+<p class="eyebrow">03 / 先猜再算</p><h2>经济机制实验</h2>
+<p>这里调参只做本地计算。每个结果都有一条真实归档证据可对照。</p>
+<div class="lab-grid">
+<form id="lab-amm" class="inset experiment">
+<h3>1. 恒定乘积 AMM</h3><p>池有 10,000 单位的输入币和输出币。试着预测 18 单位能换回多少。</p>
+<label>先预测 <select name="prediction" required><option value="">选择</option><option value="less">少于边际价推算</option><option value="equal">等于边际价推算</option><option value="more">多于边际价推算</option></select></label>
+<label>输入储备 <input name="reserve-in" value="10000" inputmode="decimal" required></label>
+<label>输出储备 <input name="reserve-out" value="10000" inputmode="decimal" required></label>
+<label>输入量 <input name="amount" value="18" inputmode="decimal" required></label><button>计算兑换</button>
+<output aria-live="polite"></output><a href="/?run=first-100&event=E000067#evidence">核对深池真实回执</a>
+</form>
+<form id="lab-depth" class="inset experiment">
+<h3>2. 流动性与价格冲击</h3><p>在同样的起始价格下，比较 10,000 与 3,000 储备的池。</p>
+<label>先预测 <select name="prediction" required><option value="">选择</option><option value="deep">深池到账多</option><option value="shallow">浅池到账多</option><option value="equal">一样多</option></select></label>
+<label>输入量 <input name="amount" value="18" inputmode="decimal" required></label><button>比较深浅池</button>
+<output aria-live="polite"></output><a href="/?run=shallow-10&event=E000067#evidence">核对浅池真实回执</a>
+</form>
+<form id="lab-info" class="inset experiment">
+<h3>3. 信息到达与套利</h3><p>N01 第 1 轮已发表，到第 2 轮才可见。池价假设固定为 1。猜角色如何处理。</p>
+<label>先预测 <select name="prediction" required><option value="">选择</option><option value="buy">买入</option><option value="sell">卖出</option><option value="hold">观望</option></select></label>
+<label>查看轮次 <select name="turn"><option>1</option><option selected>2</option></select></label><button>检查信息集</button>
+<output aria-live="polite"></output><a href="/?run=first-100&event=E000071#evidence">核对 N01 样例</a>
+</form>
+<form id="lab-risk" class="inset experiment">
+<h3>4. 策略与风控</h3><p>按 10,000 初始储备、60 bps 单笔上限、250 钱包余额测试卖单。</p>
+<label>先预测 <select name="prediction" required><option value="">选择</option><option value="accepted">接受</option><option value="rejected">拒单</option></select></label>
+<label>卖出量 <input name="amount" value="90" inputmode="decimal" required></label><button>检查订单</button>
+<output aria-live="polite"></output><a href="/?run=first-100&event=E000087#evidence">核对一条风控记录</a>
+</form>
+</div>
+</section>
+<section id="course">
+<p class="eyebrow">04 / 从体验到研究</p><h2>八周 Web3 课程</h2>
+<ol id="lessons"></ol>
+<a href="/project/docs/user-manual.md">中文用户手册</a>
+</section>
+</main>
+<footer>本地隔离链 · V2-style demo · 证据可追溯</footer>
+</body>
+</html>

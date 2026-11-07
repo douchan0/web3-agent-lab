@@ -1,0 +1,29 @@
+{
+  "mode": "fixture",
+  "agents": {
+    "trend": {
+      "model": "fixture-v1",
+      "max_calls": 3,
+      "max_tokens": 2048,
+      "timeout_seconds": 2,
+      "max_cost_usd": 0,
+      "temperature": 0
+    },
+    "event": {
+      "model": "fixture-v1",
+      "max_calls": 3,
+      "max_tokens": 2048,
+      "timeout_seconds": 2,
+      "max_cost_usd": 0,
+      "temperature": 0
+    },
+    "contrarian": {
+      "model": "fixture-v1",
+      "max_calls": 3,
+      "max_tokens": 2048,
+      "timeout_seconds": 2,
+      "max_cost_usd": 0,
+      "temperature": 0
+    }
+  }
+}

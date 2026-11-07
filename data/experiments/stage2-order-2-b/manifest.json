@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "files": {
+    "anvil.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "checkpoints.jsonl": {
+      "bytes": 1113,
+      "sha256": "38f684688f62766953156986712de1763b755a5accbd29fa8fa9d2c94ee1acde"
+    },
+    "config.json": {
+      "bytes": 1231,
+      "sha256": "537fd827243fa7592f1c3a59fb937cbafb61b3fd6b95481c00f82654bd3c37fd"
+    },
+    "costs_and_stats.json": {
+      "bytes": 57038,
+      "sha256": "938a38ab2e0a3b0af8908cbab48c73e47605579287b1d1865d3c6d367106e8ce"
+    },
+    "events.jsonl": {
+      "bytes": 677067,
+      "sha256": "efb3a3e6d89ffb56a04d19985900c7672fae4e4f4796d3fab3226a7a59e47b6e"
+    },
+    "news_fixture.json": {
+      "bytes": 2497,
+      "sha256": "15149626e7d8602bfe880aee23ca171aff2d4def01a6c3c4bb8dee11f07f6a6e"
+    },
+    "prices.json": {
+      "bytes": 10072,
+      "sha256": "1e2b5c91ed0bf5fcefab87898fcf6631d1ed51180b2d20e6124020f4ec7c5a4c"
+    },
+    "research.md": {
+      "bytes": 2275,
+      "sha256": "3e822876c2d01b2d62a591350ef679fd31a5bf71c553abe99c54ab5a164af86d"
+    },
+    "status.json": {
+      "bytes": 236,
+      "sha256": "8e46dd4c13e0c38abdf82b0b4ddb572b53499d6e1dc82e3909da6c3d7631fcfe"
+    },
+    "story.md": {
+      "bytes": 6231,
+      "sha256": "4e67b0749fafcbf67b16aa92307f6d2bb313f51c9d763d6307215c3027a9ae9a"
+    }
+  }
+}

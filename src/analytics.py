@@ -28,7 +28,7 @@ def candles(events):
 
 def summarize(events):
     stats = defaultdict(lambda: dict(orders=Counter(), risk=Counter(), fills=0, failed=0,
-                                     impact_total=0, slippage_total=Decimal(0), fees=Counter(), gas=0, gas_used=0,
+                                     impact_total=0, slippage_total=Decimal(0), slippage_count=0, fees=Counter(), gas=0, gas_used=0,
                                      realized=Decimal(0), positions=[]))
     costs = dict(setup_gas_wei=0, swap_gas_wei=0, calls=0, input_tokens=0, output_tokens=0, cost_usd=Decimal(0))
     refs = {}
@@ -53,7 +53,7 @@ def summarize(events):
             for actor, wallet in event["wallets"].items():
                 price = Decimal(event["reserves"]["sUSD"]) / Decimal(event["reserves"]["RISK"])
                 lots[actor].append((int(wallet["RISK"]), price))
-                stats[actor]["initial_nav"] = str(nav(wallet, price))
+                stats[actor]["initial_nav"] = str(nav(wallet, refs[event["round"]]))
         elif kind == "swap_receipt":
             costs["swap_gas_wei"] += int(event["gas_cost_wei"])
             if not role:
@@ -68,7 +68,9 @@ def summarize(events):
             entry["fees"][event["token_in"]] += int(event["fee_in_raw"])
             entry["impact_total"] += event["impact_bps"]
             baseline = risk_quotes[event["risk_id"]]
-            entry["slippage_total"] += (baseline - Decimal(event["amount_out_raw"])) * BPS / baseline
+            if baseline > 0:
+                entry["slippage_total"] += (baseline - Decimal(event["amount_out_raw"])) * BPS / baseline
+                entry["slippage_count"] += 1
             entry["realized"] += account_fill(lots[role], event)
         elif kind == "round_close":
             for actor, wallet in event["wallets"].items():
@@ -85,7 +87,8 @@ def summarize(events):
         entry["fill_rate"] = entry["fills"] / attempts if attempts else None
         entry["mean_impact_bps"] = entry.pop("impact_total") / entry["fills"] if entry["fills"] else None
         slippage_total = entry.pop("slippage_total")
-        entry["mean_execution_slippage_bps"] = str(slippage_total / entry["fills"]) if entry["fills"] else None
+        slippage_count = entry.pop("slippage_count")
+        entry["mean_execution_slippage_bps"] = str(slippage_total / slippage_count) if slippage_count else None
         entry["realized_pnl"] = str(entry.pop("realized"))
         entry["fee_raw"] = {token: str(amount) for token, amount in entry.pop("fees").items()}
         entry["gas_wei"] = str(entry.pop("gas"))
@@ -125,19 +128,19 @@ def account_fill(lots, event):
     return (output - cost) / UNIT
 
 
-def export_run(directory, events):
+def export_run(directory, events, *, compact=False):
     series = candles(events)
     stats = summarize(events)
-    for filename, kinds in {
+    for filename, kinds in ({} if compact else {
         "news.json": {"news"},
         "orders.json": {"decision", "risk"},
         "receipts.json": {"setup_receipt", "swap_receipt", "swap_receipt_unreconciled"},
-    }.items():
+    }).items():
         write_json(directory / filename, [event for event in events if event["kind"] in kinds])
     write_json(directory / "prices.json", series)
     write_json(directory / "costs_and_stats.json", stats)
     template = ROOT / "app/report.html"
-    if template.exists():
+    if not compact and template.exists():
         payload = json.dumps(dict(run=directory.name, series=series, events=events, stats=stats), ensure_ascii=False)
         (directory / "index.html").write_text(
             template.read_text().replace("/* RUN_DATA */null", payload.replace("<", "\\u003c"), 1),
@@ -152,5 +155,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Rebuild derived files from an archived event journal")
     parser.add_argument("directory", type=Path)
-    directory = parser.parse_args().directory
-    export_run(directory, read_events(directory))
+    parser.add_argument("--compact", action="store_true")
+    args = parser.parse_args()
+    export_run(args.directory, read_events(args.directory), compact=args.compact)

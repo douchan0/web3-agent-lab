@@ -9,6 +9,7 @@ from random import Random
 from .agents import AGENTS, Context, Headline
 from .chain import Anvil, Market, UNIT
 from .execution import BPS, FEE_BPS, execute, expected_output, impact_bps, spot
+from .model_agent import ModelAgent, validate_adapter_config
 
 
 def parse_time(value):
@@ -60,6 +61,9 @@ def validate_config(config, models):
         reference = Decimal(str(config["initial_reference"]))
         if not reference.is_finite() or not Decimal("1e-12") <= reference <= Decimal("1e12"):
             raise ValueError("initial_reference must be between 10^-12 and 10^12")
+    if models.get("mode") in ("fixture", "live"):
+        validate_adapter_config(models)
+        return
     if set(models) != {"mode", "models"} or models["mode"] != "mock" or set(models["models"]) != {"mock-v1"}:
         raise ValueError("only the offline mock-v1 configuration is implemented")
     limits = models["models"]["mock-v1"]
@@ -98,8 +102,20 @@ def risk_gate(intent, config, opening, current, wallet):
     return "accepted", fields
 
 
-def run_market(directory, store, config, news, rounds):
+def ordered_agents(agents, order, round_number, rng):
+    scheduled = list(agents[:-1])
+    if order == "rotate":
+        shift = (round_number - 1) % len(scheduled)
+        scheduled = scheduled[shift:] + scheduled[:shift]
+    if order == "random":
+        rng.shuffle(scheduled)
+    return [*scheduled, agents[-1]]
+
+
+def run_market(directory, store, config, news, rounds, *, order="fixed", agents=AGENTS,
+               checkpoint=lambda *_: None, stopping=lambda _: False):
     rng = Random(config["seed"])
+    scheduler = Random(f"order:{config['seed']}")
     released = set()
     seen = []
     start = parse_time(config["start_at"])
@@ -108,10 +124,10 @@ def run_market(directory, store, config, news, rounds):
     with Anvil(directory) as chain:
         store.record("chain_started", source="anvil_rpc", client=chain.client, chain_id=chain.chain_id)
         market = Market(chain, store.record)
-        traders = {agent.role: account for agent, account in zip(AGENTS, chain.accounts[1:])}
-        if len(traders) != len(AGENTS):
+        traders = {agent.role: account for agent, account in zip(agents, chain.accounts[1:])}
+        if len(traders) != len(agents):
             raise RuntimeError("insufficient Anvil development accounts")
-        store.record("participants", roles=traders, models={agent.role: agent.model for agent in AGENTS})
+        store.record("participants", roles=traders, models={agent.role: agent.model for agent in agents})
         market.setup(config, traders.values())
         previous = spot(market.reserves())
         for turn in range(1, rounds + 1):
@@ -132,7 +148,8 @@ def run_market(directory, store, config, news, rounds):
             store.record("round_open", reserves=opening, wallets=initial_wallets, background_draw=draw)
             fresh_headlines = headlines(fresh)
             visible_headlines = headlines(seen)
-            for agent in AGENTS:
+            scheduled = ordered_agents(agents, order, turn, scheduler)
+            for agent in scheduled:
                 # Other roles decide from the same pre-order state, even though orders execute sequentially.
                 decision_reserves = market.reserves() if agent.role == "arbitrage" else opening
                 own = initial_wallets[agent.role]
@@ -141,9 +158,15 @@ def run_market(directory, store, config, news, rounds):
                                   config["execution_slippage_bps"], draw if agent.role == "background" else 0)
                 process_order(store, config, market, traders[agent.role], agent, context, decision_reserves)
             previous = spot(opening)
-            store.record("round_close", source="anvil_rpc", reserves=market.reserves(),
-                         wallets={role: market.balances(account) for role, account in traders.items()})
-    store.record("run_complete", rounds=rounds)
+            reserves = market.reserves()
+            wallets = {role: market.balances(account) for role, account in traders.items()}
+            close_id = store.record("round_close", source="anvil_rpc", reserves=reserves, wallets=wallets)
+            stop = stopping(turn)
+            checkpoint(turn, close_id, reserves, wallets, stop)
+            if stop:
+                break
+    store.record("run_complete" if turn == rounds else "run_stopped", rounds=turn, target_rounds=rounds)
+    return turn
 
 
 def headlines(rows):
@@ -153,14 +176,17 @@ def headlines(rows):
 
 def process_order(store, config, market, account, agent, context, decision_reserves):
     intent = agent.decide(context)
-    actor = dict(role=agent.role, model=agent.model, account_address=account)
+    metadata = dict(agent.last_record) if isinstance(agent, ModelAgent) else {}
+    actual = metadata.get("actual_model", agent.model)
+    actor = dict(role=agent.role, model=actual, account_address=account)
+    usage = metadata.pop("usage", {"calls": 0, "input_tokens": 0, "output_tokens": 0, "cost_usd": "0"})
     order_id = store.record(
         "decision", source="local_decision_adapter", intent=asdict(intent), **actor,
         input_snapshot=dict(spot=str(context.spot), previous_open_spot=str(context.previous_open_spot),
                             reference=str(context.reference), wallet=dict(context.own_wallet),
                             decision_reserves=decision_reserves,
                             visible_news_ids=[news.news_id for news in context.visible_news]),
-        usage={"calls": 0, "input_tokens": 0, "output_tokens": 0, "cost_usd": "0"},
+        usage=usage, **metadata,
     )
     current = market.reserves()
     wallet = market.balances(account)

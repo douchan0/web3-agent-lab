@@ -75,3 +75,21 @@ class ArchiveTests(unittest.TestCase):
         self.assertTrue(compare(small, large, 10))
         self.assertNotEqual(next(e["tx_hash"] for e in small if e["kind"] == "swap_receipt"),
                             next(e["tx_hash"] for e in large if e["kind"] == "swap_receipt"))
+
+
+    def test_long_run_every_receipt_reconciles_from_raw_logs(self):
+        from src.archive import verify
+
+        directory = ARCHIVES / "stage2-rotate-1000"
+        verify(directory)
+        events = read_events(directory)
+        index = {e["id"]: e for e in events}
+        broadcast = {e["tx_hash"]: e for e in events if e["kind"] == "swap_broadcast"}
+        reserves = next(e["reserves"] for e in events if e["kind"] == "market_open")
+        receipts = [e for e in events if e["kind"] == "swap_receipt"]
+        self.assertEqual(len(receipts), 1219)
+        for event in receipts:
+            self.check_swap(event, index, broadcast, reserves)
+            reserves = event["reserves_after"]
+        self.assertEqual(candles(events), json.loads((directory / "prices.json").read_text()))
+        self.assertEqual(summarize(events), json.loads((directory / "costs_and_stats.json").read_text()))
