@@ -48,3 +48,13 @@ class ChainIntegration(unittest.TestCase):
             except Exception as exc:
                 store.record("error", error=repr(exc))
                 raise
+
+    def test_rpc_reads_reuse_established_loopback_connection(self):
+        import socket
+        from unittest.mock import patch
+
+        with TemporaryDirectory() as directory, Anvil(Path(directory)) as chain:
+            with patch("socket.create_connection", wraps=socket.create_connection) as connects:
+                for _ in range(50):
+                    self.assertEqual(chain.rpc("eth_blockNumber"), "0x0")
+            self.assertEqual(connects.call_count, 0)

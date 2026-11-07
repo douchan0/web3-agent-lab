@@ -467,5 +467,7 @@ const params = new URLSearchParams(location.search);
 json('/api/runs').then(runs => {
   options($('run'),runs.map(id=>[id,id]));
   options($('compare'),[['','选择对照档案'],...runs.map(id=>[id,id])]);
-  return switchRun(runs.includes(params.get('run')) ? params.get('run') : 'first-100',params.get('event'));
+  if (!runs.length) throw Error('档案目录还没有实验。');
+  const fallback = runs.includes('first-100') ? 'first-100' : runs[0];
+  return switchRun(runs.includes(params.get('run')) ? params.get('run') : fallback,params.get('event'));
 }).catch(error => $('market-status').textContent = error.message);

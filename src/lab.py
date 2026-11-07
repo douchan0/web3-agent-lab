@@ -5,6 +5,7 @@ from functools import lru_cache
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import mimetypes
+from pathlib import Path
 import re
 from urllib.parse import parse_qs, urlsplit
 
@@ -207,10 +208,13 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
+    global RUNS
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8765)
-    port = parser.parse_args().port
-    with ThreadingHTTPServer(("127.0.0.1", port), Handler) as server:
+    parser.add_argument("--archive-root", type=Path, default=RUNS)
+    args = parser.parse_args()
+    RUNS = args.archive_root.resolve()
+    with ThreadingHTTPServer(("127.0.0.1", args.port), Handler) as server:
         print(f"http://127.0.0.1:{server.server_port}", flush=True)
         try:
             server.serve_forever()

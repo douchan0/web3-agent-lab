@@ -32,7 +32,7 @@ class Intent:
     token_in: str | None
     amount_raw: str
     max_slippage_bps: int
-    confidence: None
+    confidence: float | None
     public_rationale: str
     cited_news_ids: tuple[str, ...]
 

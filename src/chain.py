@@ -36,13 +36,14 @@ class Anvil:
         self.directory = directory
         self.chain_id = 100_000 + secrets.randbelow(2_000_000_000)
         self.process = None
+        self.connection = None
         self.counter = 0
 
     def __enter__(self):
         with socket.socket() as sock:
             sock.bind(("127.0.0.1", 0))
             port = sock.getsockname()[1]
-        self.port = port
+        self.connection = HTTPConnection("127.0.0.1", port, timeout=5)
         args = [anvil_binary(), "--host", "127.0.0.1", "--port", str(port),
                 "--chain-id", str(self.chain_id), "--hardfork", "cancun", "--silent"]
         with (self.directory / "anvil.stderr.log").open("w") as log:
@@ -66,6 +67,8 @@ class Anvil:
             raise
 
     def __exit__(self, *_):
+        if self.connection is not None:
+            self.connection.close()
         if self.process and self.process.poll() is None:
             self.process.terminate()
             try:
@@ -77,15 +80,17 @@ class Anvil:
     def rpc(self, method, *params):
         self.counter += 1
         payload = {"jsonrpc": "2.0", "method": method, "params": params, "id": self.counter}
-        connection = HTTPConnection("127.0.0.1", self.port, timeout=5)
+        connection = self.connection
         try:
             connection.request("POST", "/", json.dumps(payload), {"Content-Type": "application/json"})
             with connection.getresponse() as response:
                 if response.status != 200:
                     raise RuntimeError(f"{method}: unexpected HTTP status {response.status}")
                 result = json.load(response)
-        finally:
+        except Exception:
+            # The outcome of a write can be uncertain. Clear the socket and surface the error.
             connection.close()
+            raise
         if "error" in result:
             raise RuntimeError(f"{method}: {result['error']}")
         return result["result"]

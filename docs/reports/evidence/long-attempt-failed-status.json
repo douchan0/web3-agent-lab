@@ -1,0 +1,8 @@
+{
+  "state": "failed",
+  "started_at": "2026-11-07T12:46:43.191235+00:00",
+  "target_rounds": 1000,
+  "completed_rounds": 253,
+  "finished_at": "2026-11-07T12:46:46.595714+00:00",
+  "execution_seconds": 3.404
+}

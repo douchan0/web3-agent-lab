@@ -43,7 +43,8 @@ def generate(directory, events=None, stats=None):
         f"{amount(initial['reserves']['sUSD'], 3)} sUSD。用 sUSD 储备除以 RISK 储备可以得到起始池价。"
         f"这是一小笔交易会接近的边际价格。 [池与初始钱包](/?run={run}&event={initial['id']}#evidence)", "",
         "趋势角色看池价变化，事件角色等新消息，逆向角色在价格偏移时考虑反向操作。"
-        "背景角色从固定种子抽样，套利角色比较池价和参考价。三个主角的基准行为由 mock 策略产生。"
+        "背景角色从固定种子抽样，套利角色比较池价和参考价。"
+        f"本档案主角色配置模式为 {config['models']['mode']}。"
         "每人有独立钱包，余额是两种测试币各自的数量。", "",
         "## 把重要事件按发生顺序放回桌面", "",
     ]
@@ -114,6 +115,8 @@ def generate(directory, events=None, stats=None):
     costs = stats["costs"]
     parameters = config["experiment"]
     close_count = sum(row["trades"] > 0 for row in markets)
+    modes = Counter(e.get("decision_mode", e["model"]) for e in grouped.get("decision", []))
+    uncertain = sum(bool(e.get("billing_uncertain")) for e in grouped.get("decision", []))
     questions = "在同一初始资金与消息输入下，角色的成交率、参考价收益和回撤如何不同？"
     research = [
         f"# {run} · 研究报告", "",
@@ -127,7 +130,8 @@ def generate(directory, events=None, stats=None):
         + "。决策快照保留每个角色合法可见的新闻 ID、参考价、池状态和自己的资产。背景抽样与执行顺序使用独立的随机源。", "",
         f"链上执行阶段 {status.get('execution_seconds','未计时')} 秒。布置 Gas {costs['setup_gas_wei']} wei，"
         f"兑换 Gas {costs['swap_gas_wei']} wei。模型调用 {costs['calls']} 次，输入／输出 token "
-        f"{costs['input_tokens']} / {costs['output_tokens']}，记录费用 {costs['cost_usd']} USD。", "",
+        f"{costs['input_tokens']} / {costs['output_tokens']}，记录费用 {costs['cost_usd']} USD。"
+        f"计费不确定的请求 {uncertain} 笔。决策路径计数 " + "、".join(f"{mode} {n}" for mode,n in modes.items()) + "。", "",
         "| 角色 | 成交 | 成交率 | 净值收益 | 最大回撤 | 平均含费冲击 bps | 平均执行滑点 bps |",
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]

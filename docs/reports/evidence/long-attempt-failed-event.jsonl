@@ -1,0 +1,1 @@
+{"id": "E004008", "run_id": "stage2-mock-1000", "round": 254, "simulated_at": "2025-01-01T04:13:00+00:00", "recorded_at": "2026-11-07T12:46:46.595690+00:00", "kind": "error", "source": "experiment_controller", "error": "OSError", "detail": "[Errno 49] Can't assign requested address"}

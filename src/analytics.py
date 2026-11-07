@@ -125,19 +125,19 @@ def account_fill(lots, event):
     return (output - cost) / UNIT
 
 
-def export_run(directory, events):
+def export_run(directory, events, *, compact=False):
     series = candles(events)
     stats = summarize(events)
-    for filename, kinds in {
+    for filename, kinds in ({} if compact else {
         "news.json": {"news"},
         "orders.json": {"decision", "risk"},
         "receipts.json": {"setup_receipt", "swap_receipt", "swap_receipt_unreconciled"},
-    }.items():
+    }).items():
         write_json(directory / filename, [event for event in events if event["kind"] in kinds])
     write_json(directory / "prices.json", series)
     write_json(directory / "costs_and_stats.json", stats)
     template = ROOT / "app/report.html"
-    if template.exists():
+    if not compact and template.exists():
         payload = json.dumps(dict(run=directory.name, series=series, events=events, stats=stats), ensure_ascii=False)
         (directory / "index.html").write_text(
             template.read_text().replace("/* RUN_DATA */null", payload.replace("<", "\\u003c"), 1),
@@ -152,5 +152,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Rebuild derived files from an archived event journal")
     parser.add_argument("directory", type=Path)
-    directory = parser.parse_args().directory
-    export_run(directory, read_events(directory))
+    parser.add_argument("--compact", action="store_true")
+    args = parser.parse_args()
+    export_run(args.directory, read_events(args.directory), compact=args.compact)

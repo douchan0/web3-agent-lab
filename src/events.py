@@ -1,5 +1,6 @@
 """The append-only source for all derived run outputs."""
 import json
+import os
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -25,6 +26,10 @@ class EventStore:
 
     def __exit__(self, *_):
         self.file.close()
+
+    def sync(self):
+        self.file.flush()
+        os.fsync(self.file.fileno())
 
     def record(self, kind, *, source=None, **fields):
         self.sequence += 1
