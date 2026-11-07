@@ -16,6 +16,7 @@ from .reading import document
 RUNS = ROOT / "data/experiments"
 RUN_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}")
 STATIC = {"index.html", "lab.js", "lab.css", "math.mjs"}
+PUBLIC_DOCS = {"docs/user-manual.md", "docs/reports/paired-order.md", "docs/reports/stage2-audit.md"}
 PUBLIC_CODE = {"src/experiment.py", "src/execution.py", "src/events.py", "src/analytics.py", "contracts/Market.sol"}
 PUBLIC_ARCHIVE = {"events.jsonl", "config.json", "story.md", "research.md", "report.md", "manifest.json", "status.json"}
 TOPICS = {
@@ -179,7 +180,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_path(RUNS / run / file, None if file.endswith(".md") else "text/plain; charset=utf-8")
             elif path.startswith("/project/"):
                 file = path.removeprefix("/project/")
-                if file not in PUBLIC_CODE and not re.fullmatch(r"docs/course/[a-z0-9-]+\.md|docs/user-manual\.md", file):
+                if file not in PUBLIC_CODE | PUBLIC_DOCS and not re.fullmatch(r"docs/course/(?:week-[1-8]|README)\.md", file):
                     raise FileNotFoundError(file)
                 self.send_path(ROOT / file, None if file.endswith(".md") else "text/plain; charset=utf-8")
             else:

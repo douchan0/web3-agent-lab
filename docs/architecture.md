@@ -13,3 +13,11 @@
 模型边界为 `DecisionAgent` 接口。首轮 mock 与规则交易不会发起推理请求。模型配置保存调用、超时、重试、并发、token 和费用上限，当前运行拒绝启用外部模式。以后接入供应商时应在同一边界内实施预算预检、供应商用量归档和结构化结果验证。
 
 参考资料：[Anvil](https://getfoundry.sh/anvil/overview/)、[Uniswap 概念词汇](https://developers.uniswap.org/docs/get-started/concepts/glossary)、[OpenCode SDK](https://opencode.ai/docs/sdk/)。
+
+## 第二阶段
+
+教学服务器 `src.lab` 绑定 IPv4 回环。紧凑行情投影支撑有限图表窗口；证据按 JSONL 字节偏移读一轮，支持事件 ID 和交易哈希定位。课程、数学推演与链上证据明确区分。
+
+长程执行按轮写入状态、检查点和事件。退出时按需生成分层归档与 SHA-256 清单。中断后的确定性重建换用新链，并用父档案的市场前缀校验后继续。
+
+模型适配器支持离线 fixture 和经明确授权的本机中继协议。实际供应商集成及计费核验见 [适配器边界](model-adapters.md)。
