@@ -53,12 +53,14 @@ class Journal:
         self.contracts = {}
         self.participants = {}
         self.overview = None
+        self.complete_bytes = 0
         with path.open("rb") as stream:
             while True:
                 offset = stream.tell()
                 line = stream.readline()
                 if not line or not line.endswith(b"\n"):
                     break
+                self.complete_bytes = stream.tell()
                 event = json.loads(line)
                 turn = event["round"]
                 self.rounds[turn].append(offset)
@@ -89,11 +91,12 @@ class Journal:
         volume = defaultdict(int)
         markers = defaultdict(list)
         news = defaultdict(list)
+        closed = set()
         with self.path.open("rb") as stream:
-            for line in stream:
-                if not line.endswith(b"\n"):
-                    break
-                event = json.loads(line)
+            while stream.tell() < self.complete_bytes:
+                event = json.loads(stream.readline())
+                if event["kind"] == "round_close":
+                    closed.add(event["round"])
                 events.append(event)
                 turn = event["round"]
                 if event["kind"] == "news":
@@ -104,11 +107,13 @@ class Journal:
                     markers[turn].append([event["id"], event["role"], direction, event["price_susd_per_risk"]])
         summary = summarize(events)
         rows = [[c["round"], c["open"], c["high"], c["low"], c["close"], c["reference"],
-                 str(volume[c["round"]]), news[c["round"]], markers[c["round"]]] for c in candles(events)]
+                 str(volume[c["round"]]), news[c["round"]], markers[c["round"]]] for c in candles(events) if c["round"] in closed]
         roles = {role: [[p["risk_raw"], p["susd_raw"], p["nav"], p["max_drawdown"]] for p in stats["positions"]]
                  for role, stats in summary["roles"].items()}
+        latest = max(self.rounds, default=0)
         self.overview = dict(rows=rows, roles=roles, participants=self.participants,
-                             contracts=self.contracts, costs=summary["costs"])
+                             contracts=self.contracts, costs=summary["costs"],
+                             incomplete_round=latest if latest and latest not in closed else None)
         return self.overview
 
 
@@ -194,7 +199,9 @@ class Handler(BaseHTTPRequestHandler):
         run, operation = parts
         archive = journal(run)
         if operation == "overview":
-            self.send_json(archive.series())
+            path = archive.path.with_name("status.json")
+            status = json.loads(path.read_text(encoding="utf-8")) if path.is_file() and not path.is_symlink() else {}
+            self.send_json({**archive.series(), "status":status.get("state","archived")})
         elif operation == "round":
             turn = int(query["n"][0])
             if turn not in archive.rounds:

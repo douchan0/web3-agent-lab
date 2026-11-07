@@ -28,7 +28,7 @@ def candles(events):
 
 def summarize(events):
     stats = defaultdict(lambda: dict(orders=Counter(), risk=Counter(), fills=0, failed=0,
-                                     impact_total=0, slippage_total=Decimal(0), fees=Counter(), gas=0, gas_used=0,
+                                     impact_total=0, slippage_total=Decimal(0), slippage_count=0, fees=Counter(), gas=0, gas_used=0,
                                      realized=Decimal(0), positions=[]))
     costs = dict(setup_gas_wei=0, swap_gas_wei=0, calls=0, input_tokens=0, output_tokens=0, cost_usd=Decimal(0))
     refs = {}
@@ -53,7 +53,7 @@ def summarize(events):
             for actor, wallet in event["wallets"].items():
                 price = Decimal(event["reserves"]["sUSD"]) / Decimal(event["reserves"]["RISK"])
                 lots[actor].append((int(wallet["RISK"]), price))
-                stats[actor]["initial_nav"] = str(nav(wallet, price))
+                stats[actor]["initial_nav"] = str(nav(wallet, refs[event["round"]]))
         elif kind == "swap_receipt":
             costs["swap_gas_wei"] += int(event["gas_cost_wei"])
             if not role:
@@ -68,7 +68,9 @@ def summarize(events):
             entry["fees"][event["token_in"]] += int(event["fee_in_raw"])
             entry["impact_total"] += event["impact_bps"]
             baseline = risk_quotes[event["risk_id"]]
-            entry["slippage_total"] += (baseline - Decimal(event["amount_out_raw"])) * BPS / baseline
+            if baseline > 0:
+                entry["slippage_total"] += (baseline - Decimal(event["amount_out_raw"])) * BPS / baseline
+                entry["slippage_count"] += 1
             entry["realized"] += account_fill(lots[role], event)
         elif kind == "round_close":
             for actor, wallet in event["wallets"].items():
@@ -85,7 +87,8 @@ def summarize(events):
         entry["fill_rate"] = entry["fills"] / attempts if attempts else None
         entry["mean_impact_bps"] = entry.pop("impact_total") / entry["fills"] if entry["fills"] else None
         slippage_total = entry.pop("slippage_total")
-        entry["mean_execution_slippage_bps"] = str(slippage_total / entry["fills"]) if entry["fills"] else None
+        slippage_count = entry.pop("slippage_count")
+        entry["mean_execution_slippage_bps"] = str(slippage_total / slippage_count) if slippage_count else None
         entry["realized_pnl"] = str(entry.pop("realized"))
         entry["fee_raw"] = {token: str(amount) for token, amount in entry.pop("fees").items()}
         entry["gas_wei"] = str(entry.pop("gas"))

@@ -39,7 +39,7 @@ def restart_data(run, archive_root=RUNS):
     digest = trace_digest(read_events(directory), boundary)
     return config, {
         "parent": run, "parent_manifest_sha256": sha256(directory / "manifest.json"),
-        "verified_prefix_rounds": boundary, "trace_sha256": digest,
+        "required_prefix_rounds": boundary, "trace_sha256": digest,
         "mode": "new_chain_rebuild_prefix",
     }
 
@@ -74,7 +74,8 @@ def run(args):
         raise ValueError("--checkpoint-every must be between 1 and 10000")
     if args.stop_after is not None and not 1 <= args.stop_after < rounds:
         raise ValueError("--stop-after must be a positive round before target")
-    if lineage and (rounds <= lineage["verified_prefix_rounds"] or args.seed is not None or args.models
+    if lineage and (rounds <= lineage["required_prefix_rounds"] or args.seed is not None or args.models
+                    or (args.stop_after is not None and args.stop_after < lineage["required_prefix_rounds"])
                     or (args.order and args.order != parent["order"])):
         raise ValueError("new run must extend the parent boundary with identical seed, model and order")
     news = json.loads(fixture.read_text())
@@ -90,7 +91,10 @@ def run(args):
                     strategy_source_sha256=sha256(ROOT / "src/agents.py"),
                     engine_source_sha256=sha256(ROOT / "src/experiment.py"),
                     adapter_source_sha256=sha256(ROOT / "src/model_agent.py"))
-    if parent and any(parent.get(key) != value for key, value in versions.items()):
+    checked_versions = versions if models["mode"] != "mock" else {
+        key: value for key, value in versions.items() if key != "adapter_source_sha256"
+    }
+    if parent and any(parent.get(key) != value for key, value in checked_versions.items()):
         raise ValueError("code or inputs differ from parent checkpoint")
     directory = archive_root / args.run_id
     directory.mkdir(parents=True, exist_ok=False)
@@ -100,6 +104,8 @@ def run(args):
     ))
     write_json(directory / "news_fixture.json", news)
     state = dict(state="running", started_at=clock(), target_rounds=rounds, completed_rounds=0)
+    if lineage:
+        state["parent_prefix_verified"] = False
     status_path = directory / "status.json"
     write_atomic(status_path, state)
     requested = False
@@ -114,7 +120,7 @@ def run(args):
 
     with EventStore(directory) as store:
         def checkpoint(turn, event_id, reserves, wallets, stop):
-            if lineage and turn == lineage["verified_prefix_rounds"]:
+            if lineage and turn == lineage["required_prefix_rounds"]:
                 if trace_digest(read_events(directory), turn) != lineage["trace_sha256"]:
                     raise ValueError("new chain does not reproduce the parent market checkpoint")
                 state["parent_prefix_verified"] = True

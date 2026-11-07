@@ -58,3 +58,19 @@ class ModelTests(TestCase):
         agent.decide(self.context)
         self.assertEqual(agent.last_record["usage"]["calls"],0)
         self.assertEqual(agent.calls,1)
+
+    def test_malformed_relay_http_does_not_stop_market(self):
+        from http.client import BadStatusLine, IncompleteRead
+
+        class BrokenDiscovery(OfflineFixture):
+            def models(self):
+                raise BadStatusLine("bad response")
+
+        class BrokenDecision(OfflineFixture):
+            def decide(self, _):
+                raise IncompleteRead(b"{}")
+
+        for relay in (BrokenDiscovery(), BrokenDecision()):
+            agent = ModelAgent(AGENTS[0],self.spec,relay,"live")
+            agent.decide(self.context)
+            self.assertEqual(agent.last_record["actual_model"],"mock-v1")

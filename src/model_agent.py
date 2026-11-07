@@ -1,7 +1,7 @@
 """Budgeted DecisionAgent adapter with a credential-free local relay boundary."""
 from dataclasses import asdict
 from decimal import Decimal, InvalidOperation
-from http.client import HTTPConnection
+from http.client import HTTPConnection, HTTPException
 import json
 import re
 
@@ -96,7 +96,10 @@ class LoopbackRelay:
         reply = self.request("GET", "/models")
         if reply.get("protocol") != "web3-lab-v1" or reply.get("enforces_budget") is not True:
             raise ValueError("relay has not declared budget enforcement")
-        return reply["ids"]
+        ids = reply["ids"]
+        if not isinstance(ids, list) or not all(isinstance(item, str) and MODEL_ID.fullmatch(item) for item in ids):
+            raise ValueError("relay must list exact model IDs")
+        return ids
 
     def decide(self, request):
         return self.request("POST", "/decide", request)
@@ -142,7 +145,7 @@ class ModelAgent:
         if self.available is None:
             try:
                 self.available = self.model in self.transport.models()
-            except (OSError, ValueError, TypeError, AttributeError, KeyError):
+            except (OSError, HTTPException, ValueError, TypeError, AttributeError, KeyError):
                 self.available = False
         if not self.available:
             return self.fallback_intent(context, "model_unavailable")
@@ -171,7 +174,7 @@ class ModelAgent:
             if incoming + outgoing > remaining or outgoing > request["max_output_tokens"] or self.cost > self.cap:
                 raise ValueError("relay exceeded declared budget")
             intent = parse_intent(reply["decision"], context)
-        except (OSError, ValueError, TypeError, AttributeError, KeyError, InvalidOperation):
+        except (OSError, HTTPException, ValueError, TypeError, AttributeError, KeyError, InvalidOperation):
             # Do not retry automatically after a request with potentially unknown billing.
             self.available = False
             if self.mode == "live" and usage["cost_usd"] == "0" and not (usage["input_tokens"] or usage["output_tokens"]):

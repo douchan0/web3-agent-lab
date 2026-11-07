@@ -103,6 +103,12 @@ function showEvidence(id) {
       ['交易后池储备',wallet(event.reserves_after)],
       ['池内手续费 Pool Fee',full(event.fee_in_raw) + ' ' + event.token_in]);
   }
+  if (event.kind === 'market_open') {
+    pairs.push(['池的初始储备',wallet(event.reserves)]);
+    for (const [role,address] of Object.entries(data.participants.roles ?? {})) {
+      pairs.push([title(role)+'钱包',wallet(event.balances[address])]);
+    }
+  }
   if (event.kind === 'round_close') {
     for (const [role, balance] of Object.entries(event.wallets)) pairs.push([title(role),wallet(balance)]);
   }
@@ -183,6 +189,10 @@ async function locate(key) {
     if (version !== fetchVersion || run !== id) return;
     $('kind').value = '';
     stop();
+    if (result.round > data.rows.length) {
+      await evidence(result.round,result.id);
+      return;
+    }
     await setTurn(result.round, result.id);
   } catch (error) {
     if (version === fetchVersion) $('lookup-status').textContent = error.message;
@@ -235,7 +245,9 @@ function draw() {
   rows.forEach(([n,o,h,l,c,ref,vol,news,fills],i) => {
     const px = x(i), width = Math.min(20,step*.65);
     const layer = svg('g',{'data-round':n},svgChart);
-    const caption = '第 ' + n + ' 轮 · ' + fills.length + ' 笔成交 · 成交量 ' + amount(vol) + ' RISK';
+    const prices = o === null ? '无成交' : '开/高/低/收 ' + [o,h,l,c].map(p=>Number(p).toFixed(6)).join(' / ');
+    const caption = '第 ' + n + ' 轮 · ' + prices + ' · ' + fills.length + ' 笔 · ' +
+      amount(vol) + ' RISK · 参考价 ' + Number(ref).toFixed(6);
     svg('rect',{x:px-step/2,y:15,width:step,height:301,fill:'transparent'},layer,caption);
     if (o !== null) {
       const color = Number(c)>=Number(o) ? '#00786f' : '#b94e46';
@@ -334,7 +346,13 @@ async function switchRun(id, event) {
     $('run').value = run;
     options($('role'),[['','全部角色'],...Object.keys(data.roles).map(role => [role,title(role)])]);
     $('clock').max = data.rows.length;
-    $('market-status').textContent = run + ' · 本地 Anvil · ' + (data.rows.length || 0) + ' 轮';
+    const states = {archived:'已归档',complete:'已完成',running:'运行中',exporting:'导出中',stopped:'已停止',failed:'异常终止'};
+    $('market-status').textContent = run + ' · 本地 Anvil · ' + data.rows.length + ' 轮已收盘 · ' + states[data.status];
+    if (data.incomplete_round) {
+      $('market-status').append(document.createTextNode(' · '),button('查看未收盘轮证据', () => {
+        stop(); evidence(data.incomplete_round); $('evidence').scrollIntoView();
+      }));
+    }
     const addresses = $('addresses');
     addresses.replaceChildren();
     fields(addresses,[['交易池 Pool',data.contracts.pool],...Object.entries(data.contracts.tokens ?? {}),
@@ -399,10 +417,13 @@ function setupLabs() {
       const a=units(fields.get('amount'));
       const input=units(fields.get('reserve-in')), output=units(fields.get('reserve-out'));
       const result=quote(input,output,a);
+      if (result.out===0n) {
+        return ['less','报价向下取整为零，链上调用会回退。两项储备与 k 保持原值 '+result.before+'。'];
+      }
       const actual=result.out*input, ideal=a*output;
       const observed=actual<ideal?'less':actual===ideal?'equal':'more';
       return [observed,'到账 '+full(result.out)+'。交易后输入储备 '+full(input+a)+'，输出储备 '+full(output-result.out)+'。k 原始单位平方从 '+result.before+' 增至 '+result.after+
-        '。计算按 18 位整数向下取整。'+(result.out===0n?'本量报价为零，合约会回退。':'费率 30 bps，全部输入进池。')];
+        '。计算按 18 位整数向下取整。费率 30 bps，全部输入进池。'];
     },
     'lab-depth': fields => {
       const a=units(fields.get('amount')), deep=quote(x,x,a), short=quote(shallow,shallow,a);
@@ -469,5 +490,7 @@ json('/api/runs').then(runs => {
   options($('compare'),[['','选择对照档案'],...runs.map(id=>[id,id])]);
   if (!runs.length) throw Error('档案目录还没有实验。');
   const fallback = runs.includes('first-100') ? 'first-100' : runs[0];
-  return switchRun(runs.includes(params.get('run')) ? params.get('run') : fallback,params.get('event'));
+  const requested = params.get('run');
+  if (requested && !runs.includes(requested)) throw Error('当前目录找不到请求的档案 '+requested+'，请选择可用档案。');
+  return switchRun(requested ?? fallback,params.get('event'));
 }).catch(error => $('market-status').textContent = error.message);

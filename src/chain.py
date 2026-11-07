@@ -47,7 +47,7 @@ class Anvil:
         args = [anvil_binary(), "--host", "127.0.0.1", "--port", str(port),
                 "--chain-id", str(self.chain_id), "--hardfork", "cancun", "--silent"]
         with (self.directory / "anvil.stderr.log").open("w") as log:
-            self.process = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=log)
+            self.process = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=log, start_new_session=True)
         try:
             for _ in range(100):
                 if self.process.poll() is not None:

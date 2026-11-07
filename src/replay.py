@@ -32,7 +32,7 @@ def main():
     parser.add_argument("--rounds", type=int, required=True)
     args = parser.parse_args()
     left, right = read_events(args.left), read_events(args.right)
-    if not all(any(event["kind"] == "run_complete" and event["rounds"] >= args.rounds for event in run)
+    if not all(any(event["kind"] in ("run_complete", "run_stopped") and event["rounds"] >= args.rounds for event in run)
                for run in (left, right)) or args.rounds < 1:
         parser.error("both archives must contain the requested number of complete rounds")
     if not compare(left, right, args.rounds):

@@ -36,3 +36,22 @@ class ResearchTests(unittest.TestCase):
         self.assertEqual(result["nonzero"],4)
         self.assertEqual(result["sign_test_p"],.125)
         self.assertEqual(result["mean"],Decimal(".8"))
+
+    def test_mark_to_same_reference_and_ignore_undefined_slippage(self):
+        from src.analytics import summarize
+        from src.chain import UNIT
+
+        wallet = {"RISK":str(UNIT),"sUSD":str(UNIT)}
+        events = [
+            {"kind":"reference","round":1,"price":"2"},
+            {"kind":"round_open","round":1,"wallets":{"trend":wallet},"reserves":wallet},
+            {"kind":"risk","role":"trend","result":"accepted","id":"E1","decision_quote_out_raw":"0"},
+            {"kind":"swap_receipt","role":"trend","success":True,"risk_id":"E1","gas_cost_wei":"0",
+             "gas_used":0,"token_in":"sUSD","fee_in_raw":"0","impact_bps":1,"price_susd_per_risk":"2",
+             "amount_in_raw":"2","amount_out_raw":"1"},
+            {"kind":"round_close","round":1,"id":"E2","wallets":{"trend":wallet}},
+        ]
+        row = summarize(events)["roles"]["trend"]
+        self.assertEqual(row["initial_nav"],"3")
+        self.assertEqual(row["positions"][0]["nav"],"3")
+        self.assertIsNone(row["mean_execution_slippage_bps"])

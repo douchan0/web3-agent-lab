@@ -7,7 +7,7 @@ python3 -m src.lab --port 0 >"$scratch/server" 2>&1 &
 pid=$!
 session="ui-$$"
 ab() { agent-browser --namespace web3-stage2 --session "$session" "$@"; }
-trap 'ab close >/dev/null 2>&1 || :; kill "$pid" 2>/dev/null || :; rm -f "$scratch/server"; rmdir "$scratch"' EXIT
+trap 'ab close >/dev/null 2>&1 || :; kill "$pid" 2>/dev/null || :; wait "$pid" 2>/dev/null || :; rm -f "$scratch/server"; rmdir "$scratch"' EXIT
 for i in 1 2 3 4 5 6 7 8 9 10; do test -s "$scratch/server" && break; sleep .2; done
 url=$(head -1 "$scratch/server")
 ab open "$url"

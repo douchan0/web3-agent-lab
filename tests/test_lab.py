@@ -22,3 +22,20 @@ class TeachingArchiveTests(unittest.TestCase):
         self.assertNotIn("<script>", text)
         self.assertNotIn("javascript:", text)
         self.assertIn("/?run=a&amp;event=b", text)
+
+    def test_unclosed_round_has_evidence_without_market_marks_or_wallet_reset(self):
+        import json
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+
+        archive = Journal(ROOT / "data/experiments/first-100/events.jsonl")
+        setup_and_round = archive.round_events(0) + archive.round_events(1)
+        next_round = [e for e in archive.round_events(2) if e["kind"] == "reference"]
+        with TemporaryDirectory() as folder:
+            path = Path(folder) / "events.jsonl"
+            path.write_text("".join(json.dumps(e) + "\n" for e in setup_and_round + next_round))
+            journal = Journal(path)
+            self.assertEqual(journal.series()["incomplete_round"],2)
+            self.assertEqual(len(journal.series()["rows"]),1)
+            self.assertEqual(len(journal.series()["roles"]["trend"]),1)
+            self.assertEqual(journal.round_events(2)[0]["id"],next_round[0]["id"])
