@@ -1,0 +1,9 @@
+{
+  "state": "complete",
+  "started_at": "2026-11-07T12:53:29.553054+00:00",
+  "target_rounds": 30,
+  "completed_rounds": 30,
+  "execution_seconds": 1.001,
+  "finished_at": "2026-11-07T12:53:30.565882+00:00",
+  "total_seconds": 1.012
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "news_id": "N01",
+    "source_type": "fictional_example",
+    "source_url": "fixture://web3-agent-lab/news.json#N01",
+    "title": "模拟支付试点新增商户",
+    "published_at": "2025-01-01T00:00:00Z",
+    "available_at": "2025-01-01T00:01:00Z",
+    "content_excerpt": "样例中的社区商户扩大 RISK 测试券受理范围。",
+    "asset_tags": [
+      "RISK"
+    ],
+    "reference_shock_bps": 160,
+    "source_hash": "8e3c74eaba9027ca59ac491a639016255c5f169f35d7aafdfb586afc15a562c6"
+  },
+  {
+    "news_id": "N02",
+    "source_type": "fictional_example",
+    "source_url": "fixture://web3-agent-lab/news.json#N02",
+    "title": "模拟测试网维护延期",
+    "published_at": "2025-01-01T00:01:00Z",
+    "available_at": "2025-01-01T00:03:00Z",
+    "content_excerpt": "样例中的维护窗口延长，计划内集成被推迟。",
+    "asset_tags": [
+      "RISK"
+    ],
+    "reference_shock_bps": -240,
+    "source_hash": "cb53b7033100f269108d51a8228c237ea71b34847cd8cb6b75a4a5ac95895069"
+  },
+  {
+    "news_id": "N03",
+    "source_type": "fictional_example",
+    "source_url": "fixture://web3-agent-lab/news.json#N03",
+    "title": "模拟工具包发布",
+    "published_at": "2025-01-01T00:04:00Z",
+    "available_at": "2025-01-01T00:05:00Z",
+    "content_excerpt": "样例中的开源工具缩短测试接入步骤。",
+    "asset_tags": [
+      "RISK"
+    ],
+    "reference_shock_bps": 310,
+    "source_hash": "f44d5467ecd57692590156b65267b796efa44e783a4c43e343ec9ed90b94714b"
+  },
+  {
+    "news_id": "N04",
+    "source_type": "fictional_example",
+    "source_url": "fixture://web3-agent-lab/news.json#N04",
+    "title": "模拟激励计划缩减",
+    "published_at": "2025-01-01T00:05:00Z",
+    "available_at": "2025-01-01T00:07:00Z",
+    "content_excerpt": "样例中的测试券补贴规模下降。",
+    "asset_tags": [
+      "RISK"
+    ],
+    "reference_shock_bps": -180,
+    "source_hash": "2831c942834fa77fcab22cc1c31f55d12bb524c306ca0e475c5409ea9072fbc8"
+  },
+  {
+    "news_id": "N05",
+    "source_type": "fictional_example",
+    "source_url": "fixture://web3-agent-lab/news.json#N05",
+    "title": "模拟教学活动启动",
+    "published_at": "2025-01-01T00:07:00Z",
+    "available_at": "2025-01-01T00:09:00Z",
+    "content_excerpt": "样例中的教学团队增加试验参与者。",
+    "asset_tags": [
+      "RISK"
+    ],
+    "reference_shock_bps": 120,
+    "source_hash": "64ecd06261c78b4ea6a9212309ae822b9301fd5b0903b96eef36bb673e3fdfa1"
+  }
+]

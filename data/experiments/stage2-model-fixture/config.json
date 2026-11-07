@@ -1,0 +1,55 @@
+{
+  "experiment": {
+    "seed": 7631,
+    "start_at": "2025-01-01T00:00:00Z",
+    "round_seconds": 60,
+    "pool_risk": 10000,
+    "pool_susd": 10000,
+    "agent_risk": 250,
+    "agent_susd": 250,
+    "trade_size": 18,
+    "trade_limit_bps_of_initial_input_reserve": 60,
+    "max_price_impact_bps": 100,
+    "execution_slippage_bps": 30,
+    "fee_bps": 30
+  },
+  "models": {
+    "mode": "fixture",
+    "agents": {
+      "trend": {
+        "model": "fixture-v1",
+        "max_calls": 3,
+        "max_tokens": 2048,
+        "timeout_seconds": 2,
+        "max_cost_usd": 0,
+        "temperature": 0
+      },
+      "event": {
+        "model": "fixture-v1",
+        "max_calls": 3,
+        "max_tokens": 2048,
+        "timeout_seconds": 2,
+        "max_cost_usd": 0,
+        "temperature": 0
+      },
+      "contrarian": {
+        "model": "fixture-v1",
+        "max_calls": 3,
+        "max_tokens": 2048,
+        "timeout_seconds": 2,
+        "max_cost_usd": 0,
+        "temperature": 0
+      }
+    }
+  },
+  "rounds": 5,
+  "order": "fixed",
+  "lineage": null,
+  "python": "3.14.3",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "contract_artifacts_sha256": "2834a040c5cdfdc3822559cfaf8917ede37cc96ee6529237f33284a6e00069b8",
+  "fixture_sha256": "15149626e7d8602bfe880aee23ca171aff2d4def01a6c3c4bb8dee11f07f6a6e",
+  "strategy_source_sha256": "9cfaea201b7dcd4779c8f08c9631fc37e96101a23a83feb13794dbc1abf8f387",
+  "engine_source_sha256": "3490a4a541e9e53ddc3efb05691828180eb95da24324f5ecfff5b0da5ff47c33",
+  "adapter_source_sha256": "1b42cc72cb6e8195b3bf1297004e1246ce1a3290a635ff88ec867be366910446"
+}

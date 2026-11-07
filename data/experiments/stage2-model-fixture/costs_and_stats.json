@@ -1,0 +1,394 @@
+{
+  "costs": {
+    "setup_gas_wei": "1545649302514963",
+    "swap_gas_wei": "14701596578156",
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": "0"
+  },
+  "roles": {
+    "trend": {
+      "orders": {
+        "hold": 3,
+        "buy": 1,
+        "sell": 1
+      },
+      "risk": {
+        "hold": 3,
+        "accepted": 2
+      },
+      "fills": 2,
+      "failed": 0,
+      "gas_used": 139651,
+      "positions": [
+        {
+          "round": 1,
+          "event_id": "E000070",
+          "nav": "500",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "0",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 2,
+          "event_id": "E000086",
+          "nav": "504.000",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "4.000",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 3,
+          "event_id": "E000103",
+          "nav": "504.000",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "4.000",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 4,
+          "event_id": "E000127",
+          "nav": "497.540642136612702924585472",
+          "fills": 1,
+          "risk_raw": "267785757931107104892",
+          "susd_raw": "232000000000000000000",
+          "unrealized_pnl": "-2.459357863387297075414528",
+          "max_drawdown": "0.01281618623687955768931453968"
+        },
+        {
+          "round": 5,
+          "event_id": "E000148",
+          "nav": "497.668646031530502813585472",
+          "fills": 2,
+          "risk_raw": "249785757931107104892",
+          "susd_raw": "249977091894917799889",
+          "unrealized_pnl": "-2.308445863387297075414528",
+          "max_drawdown": "0.01281618623687955768931453968"
+        }
+      ],
+      "initial_nav": "500",
+      "fill_rate": 1.0,
+      "mean_impact_bps": 48.0,
+      "mean_execution_slippage_bps": "0",
+      "realized_pnl": "-0.022908105082200111",
+      "fee_raw": {
+        "sUSD": "54000000000000000",
+        "RISK": "54000000000000000"
+      },
+      "gas_wei": "1980361766084",
+      "max_drawdown": "0.01281618623687955768931453968"
+    },
+    "event": {
+      "orders": {
+        "hold": 4,
+        "sell": 1
+      },
+      "risk": {
+        "hold": 4,
+        "accepted": 1
+      },
+      "fills": 1,
+      "failed": 0,
+      "gas_used": 69827,
+      "positions": [
+        {
+          "round": 1,
+          "event_id": "E000070",
+          "nav": "500",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "0",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 2,
+          "event_id": "E000086",
+          "nav": "504.000",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "4.000",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 3,
+          "event_id": "E000103",
+          "nav": "504.000",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "4.000",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 4,
+          "event_id": "E000127",
+          "nav": "498.162403838392315294",
+          "fills": 1,
+          "risk_raw": "232000000000000000000",
+          "susd_raw": "268107491838392315294",
+          "unrealized_pnl": "-1.945088",
+          "max_drawdown": "0.01158253206668191409920634921"
+        },
+        {
+          "round": 5,
+          "event_id": "E000148",
+          "nav": "498.162403838392315294",
+          "fills": 1,
+          "risk_raw": "232000000000000000000",
+          "susd_raw": "268107491838392315294",
+          "unrealized_pnl": "-1.945088",
+          "max_drawdown": "0.01158253206668191409920634921"
+        }
+      ],
+      "initial_nav": "500",
+      "fill_rate": 1.0,
+      "mean_impact_bps": 48.0,
+      "mean_execution_slippage_bps": "-35.81655962091925281743186116",
+      "realized_pnl": "0.107491838392315294",
+      "fee_raw": {
+        "RISK": "54000000000000000"
+      },
+      "gas_wei": "1144855980162",
+      "max_drawdown": "0.01158253206668191409920634921"
+    },
+    "contrarian": {
+      "orders": {
+        "hold": 3,
+        "sell": 1,
+        "buy": 1
+      },
+      "risk": {
+        "hold": 3,
+        "accepted": 2
+      },
+      "fills": 2,
+      "failed": 0,
+      "gas_used": 139651,
+      "positions": [
+        {
+          "round": 1,
+          "event_id": "E000070",
+          "nav": "500",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "0",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 2,
+          "event_id": "E000086",
+          "nav": "504.000",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "4.000",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 3,
+          "event_id": "E000103",
+          "nav": "504.000",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "4.000",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 4,
+          "event_id": "E000127",
+          "nav": "498.097200011328688239",
+          "fills": 1,
+          "risk_raw": "232000000000000000000",
+          "susd_raw": "268042288011328688239",
+          "unrealized_pnl": "-1.945088",
+          "max_drawdown": "0.011711904739427205875"
+        },
+        {
+          "round": 5,
+          "event_id": "E000148",
+          "nav": "497.862113910426263247977024",
+          "fills": 2,
+          "risk_raw": "249915114216690306539",
+          "susd_raw": "250042288011328688239",
+          "unrealized_pnl": "-2.180174100902424991022976",
+          "max_drawdown": "0.01217834541582090625401384127"
+        }
+      ],
+      "initial_nav": "500",
+      "fill_rate": 1.0,
+      "mean_impact_bps": 48.0,
+      "mean_execution_slippage_bps": "-17.84350272163897575128922742",
+      "realized_pnl": "0.042288011328688239",
+      "fee_raw": {
+        "RISK": "54000000000000000",
+        "sUSD": "54000000000000000"
+      },
+      "gas_wei": "1591551972688",
+      "max_drawdown": "0.01217834541582090625401384127"
+    },
+    "background": {
+      "orders": {
+        "sell": 3,
+        "buy": 2
+      },
+      "risk": {
+        "accepted": 4,
+        "trade_limit": 1
+      },
+      "fills": 4,
+      "failed": 0,
+      "gas_used": 279302,
+      "positions": [
+        {
+          "round": 1,
+          "event_id": "E000070",
+          "nav": "499.91385180155692594",
+          "fills": 1,
+          "risk_raw": "232000000000000000000",
+          "susd_raw": "267913851801556925940",
+          "unrealized_pnl": "0",
+          "max_drawdown": "0.00017229639688614812"
+        },
+        {
+          "round": 2,
+          "event_id": "E000086",
+          "nav": "503.62585180155692594",
+          "fills": 1,
+          "risk_raw": "232000000000000000000",
+          "susd_raw": "267913851801556925940",
+          "unrealized_pnl": "3.712",
+          "max_drawdown": "0.00017229639688614812"
+        },
+        {
+          "round": 3,
+          "event_id": "E000103",
+          "nav": "503.826208315146738596896",
+          "fills": 2,
+          "risk_raw": "249913736725974225056",
+          "susd_raw": "249913851801556925940",
+          "unrealized_pnl": "3.912356513589812656896",
+          "max_drawdown": "0.00017229639688614812"
+        },
+        {
+          "round": 4,
+          "event_id": "E000127",
+          "nav": "497.43314690160202836278272",
+          "fills": 3,
+          "risk_raw": "267764230407783963170",
+          "susd_raw": "231913851801556925940",
+          "unrealized_pnl": "-2.48070489995489757721728",
+          "max_drawdown": "0.01268902115061431382011422942"
+        },
+        {
+          "round": 5,
+          "event_id": "E000148",
+          "nav": "497.56103931473311754378272",
+          "fills": 4,
+          "risk_raw": "249764230407783963170",
+          "susd_raw": "249890832214688015121",
+          "unrealized_pnl": "-2.32979289995489757721728",
+          "max_drawdown": "0.01268902115061431382011422942"
+        }
+      ],
+      "initial_nav": "500",
+      "fill_rate": 0.8,
+      "mean_impact_bps": 48.0,
+      "mean_execution_slippage_bps": "-9.083877067583077735337989582",
+      "realized_pnl": "-0.109167785311984879",
+      "fee_raw": {
+        "RISK": "108000000000000000",
+        "sUSD": "108000000000000000"
+      },
+      "gas_wei": "5323657234991",
+      "max_drawdown": "0.01268902115061431382011422942"
+    },
+    "arbitrage": {
+      "orders": {
+        "hold": 1,
+        "buy": 2,
+        "sell": 2
+      },
+      "risk": {
+        "hold": 1,
+        "accepted": 4
+      },
+      "fills": 4,
+      "failed": 0,
+      "gas_used": 279290,
+      "positions": [
+        {
+          "round": 1,
+          "event_id": "E000070",
+          "nav": "500",
+          "fills": 0,
+          "risk_raw": "250000000000000000000",
+          "susd_raw": "250000000000000000000",
+          "unrealized_pnl": "0",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 2,
+          "event_id": "E000086",
+          "nav": "504.265896923232097119232",
+          "fills": 1,
+          "risk_raw": "267978245003181197952",
+          "susd_raw": "232000000000000000000",
+          "unrealized_pnl": "4.265896923232097119232",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 3,
+          "event_id": "E000103",
+          "nav": "504.401065322079278196744",
+          "fills": 2,
+          "risk_raw": "285827820198896927359",
+          "susd_raw": "214000000000000000000",
+          "unrealized_pnl": "4.401065322079278196744",
+          "max_drawdown": "0"
+        },
+        {
+          "round": 4,
+          "event_id": "E000127",
+          "nav": "497.624293528453602543022144",
+          "fills": 3,
+          "risk_raw": "267827820198896927359",
+          "susd_raw": "232041941774104227023",
+          "unrealized_pnl": "-2.417648245650624479977856",
+          "max_drawdown": "0.01343528445820876475162486873"
+        },
+        {
+          "round": 5,
+          "event_id": "E000148",
+          "nav": "497.687686199658497263022144",
+          "fills": 4,
+          "risk_raw": "249827820198896927359",
+          "susd_raw": "249954422445309121743",
+          "unrealized_pnl": "-2.266736245650624479977856",
+          "max_drawdown": "0.01343528445820876475162486873"
+        }
+      ],
+      "initial_nav": "500",
+      "fill_rate": 1.0,
+      "mean_impact_bps": 48.0,
+      "mean_execution_slippage_bps": "0",
+      "realized_pnl": "-0.045577554690878257",
+      "fee_raw": {
+        "sUSD": "108000000000000000",
+        "RISK": "108000000000000000"
+      },
+      "gas_wei": "4661169624231",
+      "max_drawdown": "0.01343528445820876475162486873"
+    }
+  }
+}
