@@ -1,6 +1,6 @@
 # 模型适配器与预算
 
-本机发现 OpenCode CLI 安装标记 2.0.27、OpenCode JS SDK 1.17.18、DeepSeek Harness 0.2.2-rc.1、MiniMax CLI 1.0.28。这些是本机组件版本。DeepSeek、GLM、MiniMax 的可调用模型 ID、程序化授权、定价与额度尚未核验。验收只用内存离线替身。 [OpenCode CLI](https://opencode.ai/docs/cli/) · [OpenCode SDK](https://opencode.ai/docs/sdk/)
+本机发现 OpenCode CLI 安装标记 2.0.27、OpenCode JS SDK 1.17.18、DeepSeek Harness 0.2.2-rc.1、MiniMax CLI 1.0.28。这些是本机组件版本。DeepSeek、GLM、MiniMax 的可调用模型 ID、程序化授权、定价与额度尚未核验。验收覆盖内存替身及无凭据回环 HTTP 替身。回环联调验证了模型发现、每角色一次请求、503 回退和一笔真实 Anvil 成交。测试中的请求数是本地替身尝试数，提供方用量和费用为零。 [OpenCode CLI](https://opencode.ai/docs/cli/) · [OpenCode SDK](https://opencode.ai/docs/sdk/)
 
 | 模式 | 运行行为 | 成本 |
 | --- | --- | --- |
