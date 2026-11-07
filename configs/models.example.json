@@ -1,0 +1,13 @@
+{
+  "mode": "mock",
+  "models": {
+    "mock-v1": {
+      "max_calls": 0,
+      "timeout_seconds": 5,
+      "max_retries": 0,
+      "max_concurrency": 1,
+      "max_input_output_tokens": 0,
+      "max_cost_usd": 0
+    }
+  }
+}
