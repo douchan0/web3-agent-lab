@@ -1,0 +1,3458 @@
+[
+  {
+    "id": "E000058",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.533538+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +0.00%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "1",
+      "previous_open_spot": "1",
+      "reference": "1",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "3000000000000000000000",
+        "sUSD": "3000000000000000000000"
+      },
+      "visible_news_ids": []
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000059",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.534533+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000058",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3000000000000000000000",
+      "sUSD": "3000000000000000000000"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+  },
+  {
+    "id": "E000060",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.534572+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +0 bps。",
+      "cited_news_ids": []
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "1",
+      "previous_open_spot": "1",
+      "reference": "1",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "3000000000000000000000",
+        "sUSD": "3000000000000000000000"
+      },
+      "visible_news_ids": []
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000061",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.535613+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000060",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3000000000000000000000",
+      "sUSD": "3000000000000000000000"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+  },
+  {
+    "id": "E000062",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.535642+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +0.00%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "1",
+      "previous_open_spot": "1",
+      "reference": "1",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "3000000000000000000000",
+        "sUSD": "3000000000000000000000"
+      },
+      "visible_news_ids": []
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000063",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.536648+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000062",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3000000000000000000000",
+      "sUSD": "3000000000000000000000"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+  },
+  {
+    "id": "E000064",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.536678+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 -1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "1",
+      "previous_open_spot": "1",
+      "reference": "1",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "3000000000000000000000",
+        "sUSD": "3000000000000000000000"
+      },
+      "visible_news_ids": []
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000065",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.537718+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000064",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3000000000000000000000",
+      "sUSD": "3000000000000000000000"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "17839285394768494863",
+    "decision_quote_out_raw": "17839285394768494863",
+    "min_out_raw": "17785767538584189379",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000068",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.541873+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +1.20%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "0.9881248225994802866590457256",
+      "previous_open_spot": "1",
+      "reference": "1",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "3018000000000000000000",
+        "sUSD": "2982160714605231505137"
+      },
+      "visible_news_ids": []
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000069",
+    "run_id": "shallow-10",
+    "round": 1,
+    "simulated_at": "2025-01-01T00:00:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.542888+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000068",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3018000000000000000000",
+      "sUSD": "2982160714605231505137"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "18053033825874013615",
+    "decision_quote_out_raw": "18053033825874013615",
+    "min_out_raw": "17998874724396391575",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000076",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.551710+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +0.01%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "1.000071250736601559024763305",
+      "previous_open_spot": "1",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2999946966174125986385",
+        "sUSD": "3000160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000077",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.552381+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000076",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2999946966174125986385",
+      "sUSD": "3000160714605231505137"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+  },
+  {
+    "id": "E000078",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.552427+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +160 bps。",
+      "cited_news_ids": [
+        "N01"
+      ]
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "1.000071250736601559024763305",
+      "previous_open_spot": "1",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2999946966174125986385",
+        "sUSD": "3000160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000079",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.553131+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000078",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2999946966174125986385",
+      "sUSD": "3000160714605231505137"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "quoted_out_raw": "17838020105264155081",
+    "decision_quote_out_raw": "17838020105264155081",
+    "min_out_raw": "17784506044948362616",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000082",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.555631+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +0.01%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "1.000071250736601559024763305",
+      "previous_open_spot": "1",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2999946966174125986385",
+        "sUSD": "3000160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000083",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.556293+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000082",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2982108946068861831304",
+      "sUSD": "3018160714605231505137"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+  },
+  {
+    "id": "E000084",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.556332+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "90000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 -5。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "1.000071250736601559024763305",
+      "previous_open_spot": "1",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "57000000000000000000",
+        "sUSD": "92839285394768494863"
+      },
+      "decision_reserves": {
+        "RISK": "2999946966174125986385",
+        "sUSD": "3000160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000085",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.556989+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000084",
+    "result": "trade_limit",
+    "reserves": {
+      "RISK": "2982108946068861831304",
+      "sUSD": "3018160714605231505137"
+    },
+    "wallet": {
+      "RISK": "57000000000000000000",
+      "sUSD": "92839285394768494863"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "max_amount_raw": "18000000000000000000"
+  },
+  {
+    "id": "E000086",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.557338+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +0.39%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "1.012089353269234040528444042",
+      "previous_open_spot": "1",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "93053033825874013615",
+        "sUSD": "57000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2982108946068861831304",
+        "sUSD": "3018160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000087",
+    "run_id": "shallow-10",
+    "round": 2,
+    "simulated_at": "2025-01-01T00:01:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.557971+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000086",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2982108946068861831304",
+      "sUSD": "3018160714605231505137"
+    },
+    "wallet": {
+      "RISK": "93053033825874013615",
+      "sUSD": "57000000000000000000"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+  },
+  {
+    "id": "E000091",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.561871+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +1.20%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "1.012089353269234040528444042",
+      "previous_open_spot": "1.000071250736601559024763305",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2982108946068861831304",
+        "sUSD": "3018160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000092",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.562525+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000091",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2982108946068861831304",
+      "sUSD": "3018160714605231505137"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "quoted_out_raw": "17626826780728064857",
+    "decision_quote_out_raw": "17626826780728064857",
+    "min_out_raw": "17573946300385880663",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000095",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.564944+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +0 bps。",
+      "cited_news_ids": []
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "1.012089353269234040528444042",
+      "previous_open_spot": "1.000071250736601559024763305",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "92838020105264155081",
+        "sUSD": "57000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2982108946068861831304",
+        "sUSD": "3018160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000096",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.565575+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000095",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2964482119288133766447",
+      "sUSD": "3036160714605231505137"
+    },
+    "wallet": {
+      "RISK": "92838020105264155081",
+      "sUSD": "57000000000000000000"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+  },
+  {
+    "id": "E000097",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.565606+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +1.20%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "1.012089353269234040528444042",
+      "previous_open_spot": "1.000071250736601559024763305",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "75000000000000000000",
+        "sUSD": "75000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2982108946068861831304",
+        "sUSD": "3018160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000098",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.566242+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000097",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2964482119288133766447",
+      "sUSD": "3036160714605231505137"
+    },
+    "wallet": {
+      "RISK": "75000000000000000000",
+      "sUSD": "75000000000000000000"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "quoted_out_raw": "18269322178101914543",
+    "decision_quote_out_raw": "18054306723708330363",
+    "min_out_raw": "18000143803537205372",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000101",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.568636+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 +1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "1.012089353269234040528444042",
+      "previous_open_spot": "1.000071250736601559024763305",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "57000000000000000000",
+        "sUSD": "92839285394768494863"
+      },
+      "decision_reserves": {
+        "RISK": "2982108946068861831304",
+        "sUSD": "3018160714605231505137"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000102",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.569275+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000101",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2982482119288133766447",
+      "sUSD": "3017891392427129590594"
+    },
+    "wallet": {
+      "RISK": "57000000000000000000",
+      "sUSD": "92839285394768494863"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "17630596502388128931",
+    "decision_quote_out_raw": "17626826780728064857",
+    "min_out_raw": "17573946300385880663",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000105",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.572072+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 -0.78%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "1.023960683729158748195118862",
+      "previous_open_spot": "1.000071250736601559024763305",
+      "reference": "1.016",
+      "wallet": {
+        "RISK": "93053033825874013615",
+        "sUSD": "57000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2964851522785745637516",
+        "sUSD": "3035891392427129590594"
+      },
+      "visible_news_ids": [
+        "N01"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000106",
+    "run_id": "shallow-10",
+    "round": 3,
+    "simulated_at": "2025-01-01T00:02:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.572772+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000105",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2964851522785745637516",
+      "sUSD": "3035891392427129590594"
+    },
+    "wallet": {
+      "RISK": "93053033825874013615",
+      "sUSD": "57000000000000000000"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "18265439243631394712",
+    "decision_quote_out_raw": "18265439243631394712",
+    "min_out_raw": "18210642925900500528",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000113",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.578854+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -0.04%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "1.011658116447336946671478161",
+      "previous_open_spot": "1.012089353269234040528444042",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "92626826780728064857",
+        "sUSD": "57000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2982851522785745637516",
+        "sUSD": "3017625953183498195882"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000114",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.579494+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000113",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2982851522785745637516",
+      "sUSD": "3017625953183498195882"
+    },
+    "wallet": {
+      "RISK": "92626826780728064857",
+      "sUSD": "57000000000000000000"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+  },
+  {
+    "id": "E000115",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.579528+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 -240 bps。",
+      "cited_news_ids": [
+        "N02"
+      ]
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "1.011658116447336946671478161",
+      "previous_open_spot": "1.012089353269234040528444042",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "92838020105264155081",
+        "sUSD": "57000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "2982851522785745637516",
+        "sUSD": "3017625953183498195882"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000116",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.580186+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000115",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2982851522785745637516",
+      "sUSD": "3017625953183498195882"
+    },
+    "wallet": {
+      "RISK": "92838020105264155081",
+      "sUSD": "57000000000000000000"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "quoted_out_raw": "18046640916164749236",
+    "decision_quote_out_raw": "18046640916164749236",
+    "min_out_raw": "17992500993416254989",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000119",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.582530+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -0.04%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "1.011658116447336946671478161",
+      "previous_open_spot": "1.012089353269234040528444042",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "57000000000000000000",
+        "sUSD": "93269322178101914543"
+      },
+      "decision_reserves": {
+        "RISK": "2982851522785745637516",
+        "sUSD": "3017625953183498195882"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000120",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.583178+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000119",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3000851522785745637516",
+      "sUSD": "2999579312267333446646"
+    },
+    "wallet": {
+      "RISK": "57000000000000000000",
+      "sUSD": "93269322178101914543"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+  },
+  {
+    "id": "E000121",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.583212+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 +1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "1.011658116447336946671478161",
+      "previous_open_spot": "1.012089353269234040528444042",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "74630596502388128931",
+        "sUSD": "74839285394768494863"
+      },
+      "decision_reserves": {
+        "RISK": "2982851522785745637516",
+        "sUSD": "3017625953183498195882"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000122",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.583837+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000121",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3000851522785745637516",
+      "sUSD": "2999579312267333446646"
+    },
+    "wallet": {
+      "RISK": "74630596502388128931",
+      "sUSD": "74839285394768494863"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "17846836680699875053",
+    "decision_quote_out_raw": "17634322049844398772",
+    "min_out_raw": "17581419083694865576",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000125",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.586469+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 -1.97%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "1.011590536992227221525489714",
+      "previous_open_spot": "1.012089353269234040528444042",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "75053033825874013615",
+        "sUSD": "75265439243631394712"
+      },
+      "decision_reserves": {
+        "RISK": "2983004686105045762463",
+        "sUSD": "3017579312267333446646"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000126",
+    "run_id": "shallow-10",
+    "round": 4,
+    "simulated_at": "2025-01-01T00:03:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.587122+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000125",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2983004686105045762463",
+      "sUSD": "3017579312267333446646"
+    },
+    "wallet": {
+      "RISK": "75053033825874013615",
+      "sUSD": "75265439243631394712"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "18045440929332875059",
+    "decision_quote_out_raw": "18045440929332875059",
+    "min_out_raw": "17991304606544876434",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000132",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.593217+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -1.20%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "0.9995098925457013741014950215",
+      "previous_open_spot": "1.011658116447336946671478161",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "92626826780728064857",
+        "sUSD": "57000000000000000000"
+      },
+      "decision_reserves": {
+        "RISK": "3001004686105045762463",
+        "sUSD": "2999533871338000571587"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000133",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.593860+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000132",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3001004686105045762463",
+      "sUSD": "2999533871338000571587"
+    },
+    "wallet": {
+      "RISK": "92626826780728064857",
+      "sUSD": "57000000000000000000"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "quoted_out_raw": "17830577724501039307",
+    "decision_quote_out_raw": "17830577724501039307",
+    "min_out_raw": "17777085991327536190",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000136",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.596188+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +0 bps。",
+      "cited_news_ids": []
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "0.9995098925457013741014950215",
+      "previous_open_spot": "1.011658116447336946671478161",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "74838020105264155081",
+        "sUSD": "75046640916164749236"
+      },
+      "decision_reserves": {
+        "RISK": "3001004686105045762463",
+        "sUSD": "2999533871338000571587"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000137",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.596802+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000136",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3019004686105045762463",
+      "sUSD": "2981703293613499532280"
+    },
+    "wallet": {
+      "RISK": "74838020105264155081",
+      "sUSD": "75046640916164749236"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+  },
+  {
+    "id": "E000138",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.596834+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -1.20%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "0.9995098925457013741014950215",
+      "previous_open_spot": "1.011658116447336946671478161",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "57000000000000000000",
+        "sUSD": "93269322178101914543"
+      },
+      "decision_reserves": {
+        "RISK": "3001004686105045762463",
+        "sUSD": "2999533871338000571587"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000139",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.597474+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000138",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3019004686105045762463",
+      "sUSD": "2981703293613499532280"
+    },
+    "wallet": {
+      "RISK": "57000000000000000000",
+      "sUSD": "93269322178101914543"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "quoted_out_raw": "18061797494858092044",
+    "decision_quote_out_raw": "17848016355767932651",
+    "min_out_raw": "17794472306700628854",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000142",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.599867+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 -1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "0.9995098925457013741014950215",
+      "previous_open_spot": "1.011658116447336946671478161",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "92477433183088003984",
+        "sUSD": "56839285394768494863"
+      },
+      "decision_reserves": {
+        "RISK": "3001004686105045762463",
+        "sUSD": "2999533871338000571587"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000143",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.600509+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000142",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3000942888610187670419",
+      "sUSD": "2999703293613499532280"
+    },
+    "wallet": {
+      "RISK": "92477433183088003984",
+      "sUSD": "56839285394768494863"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "17831949864167053325",
+    "decision_quote_out_raw": "17830577724501039307",
+    "min_out_raw": "17777085991327536190",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000146",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.603237+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +0.39%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "0.9877203556911533386021408815",
+      "previous_open_spot": "1.011658116447336946671478161",
+      "reference": "0.991616",
+      "wallet": {
+        "RISK": "57053033825874013615",
+        "sUSD": "93310880172964269771"
+      },
+      "decision_reserves": {
+        "RISK": "3018942888610187670419",
+        "sUSD": "2981871343749332478955"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000147",
+    "run_id": "shallow-10",
+    "round": 5,
+    "simulated_at": "2025-01-01T00:04:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.603865+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000146",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3018942888610187670419",
+      "sUSD": "2981871343749332478955"
+    },
+    "wallet": {
+      "RISK": "57053033825874013615",
+      "sUSD": "93310880172964269771"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+  },
+  {
+    "id": "E000152",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.607601+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -1.18%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "0.9877203556911533386021408815",
+      "previous_open_spot": "0.9995098925457013741014950215",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "74626826780728064857",
+        "sUSD": "74830577724501039307"
+      },
+      "decision_reserves": {
+        "RISK": "3018942888610187670419",
+        "sUSD": "2981871343749332478955"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000153",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.608231+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000152",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3018942888610187670419",
+      "sUSD": "2981871343749332478955"
+    },
+    "wallet": {
+      "RISK": "74626826780728064857",
+      "sUSD": "74830577724501039307"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "quoted_out_raw": "17620882784228316242",
+    "decision_quote_out_raw": "17620882784228316242",
+    "min_out_raw": "17568020135875631294",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000156",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.610612+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +310 bps。",
+      "cited_news_ids": [
+        "N03"
+      ]
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "0.9877203556911533386021408815",
+      "previous_open_spot": "0.9995098925457013741014950215",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "74838020105264155081",
+        "sUSD": "75046640916164749236"
+      },
+      "decision_reserves": {
+        "RISK": "3018942888610187670419",
+        "sUSD": "2981871343749332478955"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000157",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.611250+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000156",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3036942888610187670419",
+      "sUSD": "2964250460965104162713"
+    },
+    "wallet": {
+      "RISK": "74838020105264155081",
+      "sUSD": "75046640916164749236"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "quoted_out_raw": "18275448245069916271",
+    "decision_quote_out_raw": "18060415975622010282",
+    "min_out_raw": "18006234727695144252",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000160",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.613620+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -1.18%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "0.9877203556911533386021408815",
+      "previous_open_spot": "0.9995098925457013741014950215",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "75061797494858092044",
+        "sUSD": "75269322178101914543"
+      },
+      "decision_reserves": {
+        "RISK": "3018942888610187670419",
+        "sUSD": "2981871343749332478955"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000161",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.614261+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000160",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3018667440365117754148",
+      "sUSD": "2982250460965104162713"
+    },
+    "wallet": {
+      "RISK": "75061797494858092044",
+      "sUSD": "75269322178101914543"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "quoted_out_raw": "18056486163364786203",
+    "decision_quote_out_raw": "18060415975622010282",
+    "min_out_raw": "18006234727695144252",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000164",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.616592+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "90000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 +5。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "0.9877203556911533386021408815",
+      "previous_open_spot": "0.9995098925457013741014950215",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "74477433183088003984",
+        "sUSD": "74671235258935548188"
+      },
+      "decision_reserves": {
+        "RISK": "3018942888610187670419",
+        "sUSD": "2981871343749332478955"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000165",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.617221+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000164",
+    "result": "trade_limit",
+    "reserves": {
+      "RISK": "3000610954201752967945",
+      "sUSD": "3000250460965104162713"
+    },
+    "wallet": {
+      "RISK": "74477433183088003984",
+      "sUSD": "74671235258935548188"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "max_amount_raw": "18000000000000000000"
+  },
+  {
+    "id": "E000166",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.617569+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +2.25%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "0.9998798600544519085824090070",
+      "previous_open_spot": "0.9995098925457013741014950215",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "57053033825874013615",
+        "sUSD": "93310880172964269771"
+      },
+      "decision_reserves": {
+        "RISK": "3000610954201752967945",
+        "sUSD": "3000250460965104162713"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000167",
+    "run_id": "shallow-10",
+    "round": 6,
+    "simulated_at": "2025-01-01T00:05:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.618192+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000166",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3000610954201752967945",
+      "sUSD": "3000250460965104162713"
+    },
+    "wallet": {
+      "RISK": "57053033825874013615",
+      "sUSD": "93310880172964269771"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "17841437719692313518",
+    "decision_quote_out_raw": "17841437719692313518",
+    "min_out_raw": "17787913406533236578",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000173",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.624278+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +2.45%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "1.011895302096586550729893078",
+      "previous_open_spot": "0.9877203556911533386021408815",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "56626826780728064857",
+        "sUSD": "92451460508729355549"
+      },
+      "decision_reserves": {
+        "RISK": "2982769516482060654427",
+        "sUSD": "3018250460965104162713"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000174",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.624911+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000173",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2982769516482060654427",
+      "sUSD": "3018250460965104162713"
+    },
+    "wallet": {
+      "RISK": "56626826780728064857",
+      "sUSD": "92451460508729355549"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "quoted_out_raw": "17630210176113594201",
+    "decision_quote_out_raw": "17630210176113594201",
+    "min_out_raw": "17577319545585253419",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000177",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.627315+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +0 bps。",
+      "cited_news_ids": []
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "1.011895302096586550729893078",
+      "previous_open_spot": "0.9877203556911533386021408815",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "93113468350334071352",
+        "sUSD": "57046640916164749236"
+      },
+      "decision_reserves": {
+        "RISK": "2982769516482060654427",
+        "sUSD": "3018250460965104162713"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000178",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.627942+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000177",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2965139306305947060226",
+      "sUSD": "3036250460965104162713"
+    },
+    "wallet": {
+      "RISK": "93113468350334071352",
+      "sUSD": "57046640916164749236"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+  },
+  {
+    "id": "E000179",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.627979+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +2.45%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "1.011895302096586550729893078",
+      "previous_open_spot": "0.9877203556911533386021408815",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "93118283658222878247",
+        "sUSD": "57269322178101914543"
+      },
+      "decision_reserves": {
+        "RISK": "2982769516482060654427",
+        "sUSD": "3018250460965104162713"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000180",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.628652+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000179",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2965139306305947060226",
+      "sUSD": "3036250460965104162713"
+    },
+    "wallet": {
+      "RISK": "93118283658222878247",
+      "sUSD": "57269322178101914543"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "quoted_out_raw": "18265837271665130212",
+    "decision_quote_out_raw": "18050869026058698717",
+    "min_out_raw": "17996716418980522621",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000183",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.630941+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 +0。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "1.011895302096586550729893078",
+      "previous_open_spot": "0.9877203556911533386021408815",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "74477433183088003984",
+        "sUSD": "74671235258935548188"
+      },
+      "decision_reserves": {
+        "RISK": "2982769516482060654427",
+        "sUSD": "3018250460965104162713"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000184",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.631558+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000183",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2983139306305947060226",
+      "sUSD": "3017984623693439032501"
+    },
+    "wallet": {
+      "RISK": "74477433183088003984",
+      "sUSD": "74671235258935548188"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65"
+  },
+  {
+    "id": "E000185",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.631891+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +1.06%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "1.011680754336156462357521170",
+      "previous_open_spot": "0.9877203556911533386021408815",
+      "reference": "1.022356096",
+      "wallet": {
+        "RISK": "74894471545566327133",
+        "sUSD": "75310880172964269771"
+      },
+      "decision_reserves": {
+        "RISK": "2983139306305947060226",
+        "sUSD": "3017984623693439032501"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000186",
+    "run_id": "shallow-10",
+    "round": 7,
+    "simulated_at": "2025-01-01T00:06:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.632522+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000185",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2983139306305947060226",
+      "sUSD": "3017984623693439032501"
+    },
+    "wallet": {
+      "RISK": "74894471545566327133",
+      "sUSD": "75310880172964269771"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "17633939844724331751",
+    "decision_quote_out_raw": "17633939844724331751",
+    "min_out_raw": "17581038025190158756",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000193",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.638650+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +1.17%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "1.023766356328102061614830909",
+      "previous_open_spot": "1.011895302096586550729893078",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "74257036956841659058",
+        "sUSD": "74451460508729355549"
+      },
+      "decision_reserves": {
+        "RISK": "2965505366461222728475",
+        "sUSD": "3035984623693439032501"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000194",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.639278+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000193",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2965505366461222728475",
+      "sUSD": "3035984623693439032501"
+    },
+    "wallet": {
+      "RISK": "74257036956841659058",
+      "sUSD": "74451460508729355549"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "quoted_out_raw": "17426381232639078894",
+    "decision_quote_out_raw": "17426381232639078894",
+    "min_out_raw": "17374102088941161658",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000197",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.641649+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 -180 bps。",
+      "cited_news_ids": [
+        "N04"
+      ]
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "1.023766356328102061614830909",
+      "previous_open_spot": "1.011895302096586550729893078",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "93113468350334071352",
+        "sUSD": "57046640916164749236"
+      },
+      "decision_reserves": {
+        "RISK": "2965505366461222728475",
+        "sUSD": "3035984623693439032501"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000198",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.642325+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000197",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2948078985228583649581",
+      "sUSD": "3053984623693439032501"
+    },
+    "wallet": {
+      "RISK": "93113468350334071352",
+      "sUSD": "57046640916164749236"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "quoted_out_raw": "18478201744675674768",
+    "decision_quote_out_raw": "18261997051229830159",
+    "min_out_raw": "18207211060076140669",
+    "impact_bps": 91
+  },
+  {
+    "id": "E000201",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.644693+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +1.17%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "1.023766356328102061614830909",
+      "previous_open_spot": "1.011895302096586550729893078",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "75118283658222878247",
+        "sUSD": "75535159449767044755"
+      },
+      "decision_reserves": {
+        "RISK": "2965505366461222728475",
+        "sUSD": "3035984623693439032501"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000202",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.645326+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000201",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2966078985228583649581",
+      "sUSD": "3035506421948763357733"
+    },
+    "wallet": {
+      "RISK": "75118283658222878247",
+      "sUSD": "75535159449767044755"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "quoted_out_raw": "18255610632603189518",
+    "decision_quote_out_raw": "18261997051229830159",
+    "min_out_raw": "18207211060076140669",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000205",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.647768+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 -1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "1.023766356328102061614830909",
+      "previous_open_spot": "1.011895302096586550729893078",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "74477433183088003984",
+        "sUSD": "74671235258935548188"
+      },
+      "decision_reserves": {
+        "RISK": "2965505366461222728475",
+        "sUSD": "3035984623693439032501"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000206",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.648385+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000205",
+    "result": "execution_slippage",
+    "reserves": {
+      "RISK": "2984078985228583649581",
+      "sUSD": "3017250811316160168215"
+    },
+    "wallet": {
+      "RISK": "74477433183088003984",
+      "sUSD": "74671235258935548188"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "18037019453972613304",
+    "decision_quote_out_raw": "18261997051229830159",
+    "min_out_raw": "18207211060076140669",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000207",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.648722+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 -0.71%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "1.011116269459280254671701295",
+      "previous_open_spot": "1.011895302096586550729893078",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "92528411390290658884",
+        "sUSD": "57310880172964269771"
+      },
+      "decision_reserves": {
+        "RISK": "2984078985228583649581",
+        "sUSD": "3017250811316160168215"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000208",
+    "run_id": "shallow-10",
+    "round": 8,
+    "simulated_at": "2025-01-01T00:07:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.649349+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000207",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "2984078985228583649581",
+      "sUSD": "3017250811316160168215"
+    },
+    "wallet": {
+      "RISK": "92528411390290658884",
+      "sUSD": "57310880172964269771"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "18037019453972613304",
+    "decision_quote_out_raw": "18037019453972613304",
+    "min_out_raw": "17982908395610695465",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000214",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.655429+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -2.41%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "0.9990455969411551196293264858",
+      "previous_open_spot": "1.023766356328102061614830909",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "91683418189480737952",
+        "sUSD": "56451460508729355549"
+      },
+      "decision_reserves": {
+        "RISK": "3002078985228583649581",
+        "sUSD": "2999213791862187554911"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000215",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.656052+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000214",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3002078985228583649581",
+      "sUSD": "2999213791862187554911"
+    },
+    "wallet": {
+      "RISK": "91683418189480737952",
+      "sUSD": "56451460508729355549"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "quoted_out_raw": "17822332918442700883",
+    "decision_quote_out_raw": "17822332918442700883",
+    "min_out_raw": "17768865919687372781",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000218",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.658450+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +0 bps。",
+      "cited_news_ids": []
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "0.9990455969411551196293264858",
+      "previous_open_spot": "1.023766356328102061614830909",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "75113468350334071352",
+        "sUSD": "75524842660840424004"
+      },
+      "decision_reserves": {
+        "RISK": "3002078985228583649581",
+        "sUSD": "2999213791862187554911"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000219",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.659094+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000218",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3020078985228583649581",
+      "sUSD": "2981391458943744854028"
+    },
+    "wallet": {
+      "RISK": "75113468350334071352",
+      "sUSD": "75524842660840424004"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+  },
+  {
+    "id": "E000220",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.659128+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 -2.41%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "0.9990455969411551196293264858",
+      "previous_open_spot": "1.023766356328102061614830909",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "57118283658222878247",
+        "sUSD": "93790770082370234273"
+      },
+      "decision_reserves": {
+        "RISK": "3002078985228583649581",
+        "sUSD": "2999213791862187554911"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000221",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.659758+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000220",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3020078985228583649581",
+      "sUSD": "2981391458943744854028"
+    },
+    "wallet": {
+      "RISK": "57118283658222878247",
+      "sUSD": "93790770082370234273"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "quoted_out_raw": "18070103218061632080",
+    "decision_quote_out_raw": "17856299694243367570",
+    "min_out_raw": "17802730795160637468",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000224",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.662075+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "sell",
+      "token_in": "RISK",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 -1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "0.9990455969411551196293264858",
+      "previous_open_spot": "1.023766356328102061614830909",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "74477433183088003984",
+        "sUSD": "74671235258935548188"
+      },
+      "decision_reserves": {
+        "RISK": "3002078985228583649581",
+        "sUSD": "2999213791862187554911"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000225",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.662716+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000224",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3002008882010522017501",
+      "sUSD": "2999391458943744854028"
+    },
+    "wallet": {
+      "RISK": "74477433183088003984",
+      "sUSD": "74671235258935548188"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "17823802416004737778",
+    "decision_quote_out_raw": "17822332918442700883",
+    "min_out_raw": "17768865919687372781",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000228",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.665325+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +1.69%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "0.9872711548261439953873244378",
+      "previous_open_spot": "1.023766356328102061614830909",
+      "reference": "1.003953686272",
+      "wallet": {
+        "RISK": "74528411390290658884",
+        "sUSD": "75347899626936883075"
+      },
+      "decision_reserves": {
+        "RISK": "3020008882010522017501",
+        "sUSD": "2981567656527740116250"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000229",
+    "run_id": "shallow-10",
+    "round": 9,
+    "simulated_at": "2025-01-01T00:08:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.665965+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000228",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3020008882010522017501",
+      "sUSD": "2981567656527740116250"
+    },
+    "wallet": {
+      "RISK": "74528411390290658884",
+      "sUSD": "75347899626936883075"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "quoted_out_raw": "18068622317692589056",
+    "decision_quote_out_raw": "18068622317692589056",
+    "min_out_raw": "18014416450739511289",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000236",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.672044+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +0.02%，按方向跟随。",
+      "cited_news_ids": []
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+    "input_snapshot": {
+      "spot": "0.9992096434439597787099030691",
+      "previous_open_spot": "0.9990455969411551196293264858",
+      "reference": "1.016001130507264",
+      "wallet": {
+        "RISK": "73683418189480737952",
+        "sUSD": "74273793427172056432"
+      },
+      "decision_reserves": {
+        "RISK": "3001940259692829428445",
+        "sUSD": "2999567656527740116250"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000237",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.672665+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000236",
+    "result": "hold",
+    "reserves": {
+      "RISK": "3001940259692829428445",
+      "sUSD": "2999567656527740116250"
+    },
+    "wallet": {
+      "RISK": "73683418189480737952",
+      "sUSD": "74273793427172056432"
+    },
+    "role": "trend",
+    "model": "mock-v1",
+    "account_address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+  },
+  {
+    "id": "E000238",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.672697+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "当轮新可见样例新闻信号合计 +120 bps。",
+      "cited_news_ids": [
+        "N05"
+      ]
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "input_snapshot": {
+      "spot": "0.9992096434439597787099030691",
+      "previous_open_spot": "0.9990455969411551196293264858",
+      "reference": "1.016001130507264",
+      "wallet": {
+        "RISK": "75113468350334071352",
+        "sUSD": "75524842660840424004"
+      },
+      "decision_reserves": {
+        "RISK": "3001940259692829428445",
+        "sUSD": "2999567656527740116250"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000239",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.673306+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000238",
+    "result": "accepted",
+    "reserves": {
+      "RISK": "3001940259692829428445",
+      "sUSD": "2999567656527740116250"
+    },
+    "wallet": {
+      "RISK": "75113468350334071352",
+      "sUSD": "75524842660840424004"
+    },
+    "role": "event",
+    "model": "mock-v1",
+    "account_address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+    "quoted_out_raw": "17853380641345330086",
+    "decision_quote_out_raw": "17853380641345330086",
+    "min_out_raw": "17799820499421294096",
+    "impact_bps": 90
+  },
+  {
+    "id": "E000242",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.675659+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "与上轮开盘池价相比变动 +0.02%，超过阈值则反向。",
+      "cited_news_ids": []
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+    "input_snapshot": {
+      "spot": "0.9992096434439597787099030691",
+      "previous_open_spot": "0.9990455969411551196293264858",
+      "reference": "1.016001130507264",
+      "wallet": {
+        "RISK": "75188386876284510327",
+        "sUSD": "75790770082370234273"
+      },
+      "decision_reserves": {
+        "RISK": "3001940259692829428445",
+        "sUSD": "2999567656527740116250"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000243",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.676281+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000242",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2984086879051484098359",
+      "sUSD": "3017567656527740116250"
+    },
+    "wallet": {
+      "RISK": "75188386876284510327",
+      "sUSD": "75790770082370234273"
+    },
+    "role": "contrarian",
+    "model": "mock-v1",
+    "account_address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+  },
+  {
+    "id": "E000244",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.676313+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "buy",
+      "token_in": "sUSD",
+      "amount_raw": "18000000000000000000",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "固定种子的背景交易抽样 +1。",
+      "cited_news_ids": []
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "input_snapshot": {
+      "spot": "0.9992096434439597787099030691",
+      "previous_open_spot": "0.9990455969411551196293264858",
+      "reference": "1.016001130507264",
+      "wallet": {
+        "RISK": "56477433183088003984",
+        "sUSD": "92495037674940285966"
+      },
+      "decision_reserves": {
+        "RISK": "3001940259692829428445",
+        "sUSD": "2999567656527740116250"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000245",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.676942+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000244",
+    "result": "execution_slippage",
+    "reserves": {
+      "RISK": "2984086879051484098359",
+      "sUSD": "3017567656527740116250"
+    },
+    "wallet": {
+      "RISK": "56477433183088003984",
+      "sUSD": "92495037674940285966"
+    },
+    "role": "background",
+    "model": "rule-v1",
+    "account_address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+    "quoted_out_raw": "17641964158618023826",
+    "decision_quote_out_raw": "17853380641345330086",
+    "min_out_raw": "17799820499421294096",
+    "impact_bps": 89
+  },
+  {
+    "id": "E000246",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.677273+00:00",
+    "kind": "decision",
+    "source": "local_decision_adapter",
+    "intent": {
+      "action": "hold",
+      "token_in": null,
+      "amount_raw": "0",
+      "max_slippage_bps": 30,
+      "confidence": null,
+      "public_rationale": "外部参考价相对池内现价偏离 +0.47%。",
+      "cited_news_ids": []
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+    "input_snapshot": {
+      "spot": "1.011219773027150654212874383",
+      "previous_open_spot": "0.9990455969411551196293264858",
+      "reference": "1.016001130507264",
+      "wallet": {
+        "RISK": "92597033707983247940",
+        "sUSD": "57347899626936883075"
+      },
+      "decision_reserves": {
+        "RISK": "2984086879051484098359",
+        "sUSD": "3017567656527740116250"
+      },
+      "visible_news_ids": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05"
+      ]
+    },
+    "usage": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": "0"
+    }
+  },
+  {
+    "id": "E000247",
+    "run_id": "shallow-10",
+    "round": 10,
+    "simulated_at": "2025-01-01T00:09:00+00:00",
+    "recorded_at": "2026-11-07T10:47:49.677884+00:00",
+    "kind": "risk",
+    "source": "local_risk_gate",
+    "order_id": "E000246",
+    "result": "hold",
+    "reserves": {
+      "RISK": "2984086879051484098359",
+      "sUSD": "3017567656527740116250"
+    },
+    "wallet": {
+      "RISK": "92597033707983247940",
+      "sUSD": "57347899626936883075"
+    },
+    "role": "arbitrage",
+    "model": "rule-v1",
+    "account_address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+  }
+]

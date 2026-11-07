@@ -41,10 +41,14 @@ def execute(market, account, symbol, amount, min_out, record, **context):
                    wallet_before=wallet_before, eth_before_wei=str(eth_before))
     receipt = market.swap(account, symbol, amount, min_out,
                           lambda tx_hash: record("swap_broadcast", tx_hash=tx_hash, **details))
-    after = market.reserves()
-    wallet_after = market.balances(account)
-    pool_balances = market.balances(market.pool)
-    eth_after = int(chain.rpc("eth_getBalance", account, "latest"), 16)
+    try:
+        after = market.reserves()
+        wallet_after = market.balances(account)
+        pool_balances = market.balances(market.pool)
+        eth_after = int(chain.rpc("eth_getBalance", account, "latest"), 16)
+    except BaseException:
+        record("swap_receipt_unreconciled", tx_hash=receipt["transactionHash"], receipt=receipt, **details)
+        raise
     success = receipt["status"] == "0x1"
     other = opposite(symbol)
     output = int(wallet_after[other]) - int(wallet_before[other])

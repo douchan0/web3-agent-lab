@@ -39,18 +39,35 @@ def release_news(rows, at, released):
 
 
 def validate_config(config, models):
+    positive = ("round_seconds", "pool_risk", "pool_susd", "agent_risk", "agent_susd", "trade_size")
+    bps = ("trade_limit_bps_of_initial_input_reserve", "max_price_impact_bps", "execution_slippage_bps")
+    required = {"seed", "start_at", "fee_bps", *positive, *bps}
+    if not required <= config.keys() <= required | {"initial_reference"}:
+        raise ValueError("experiment config has missing or unrecognized fields")
+    if type(config["seed"]) is not int:
+        raise ValueError("seed must be an integer")
     if config["fee_bps"] != FEE_BPS:
         raise ValueError("fee_bps must match the contract's fixed 30 bps")
-    for key in ("round_seconds", "pool_risk", "pool_susd", "agent_risk", "agent_susd", "trade_size"):
+    for key in positive:
         value = config[key]
         if type(value) is not int or not 0 < value <= 10**12:
             raise ValueError(f"{key} must be a positive integer up to 10^12")
-    for key in ("trade_limit_bps_of_initial_input_reserve", "max_price_impact_bps", "execution_slippage_bps"):
+    for key in bps:
         if type(config[key]) is not int or not 0 <= config[key] < BPS:
             raise ValueError(f"{key} must be between 0 and 9999")
     parse_time(config["start_at"])
-    if models["mode"] != "mock":
-        raise ValueError("only offline mock mode is implemented")
+    if "initial_reference" in config:
+        reference = Decimal(str(config["initial_reference"]))
+        if not reference.is_finite() or not Decimal("1e-12") <= reference <= Decimal("1e12"):
+            raise ValueError("initial_reference must be between 10^-12 and 10^12")
+    if set(models) != {"mode", "models"} or models["mode"] != "mock" or set(models["models"]) != {"mock-v1"}:
+        raise ValueError("only the offline mock-v1 configuration is implemented")
+    limits = models["models"]["mock-v1"]
+    keys = {"max_calls", "timeout_seconds", "max_retries", "max_concurrency",
+            "max_input_output_tokens", "max_cost_usd"}
+    if set(limits) != keys or any(type(value) not in (int, float) or not 0 <= value < float("inf")
+                                  for value in limits.values()):
+        raise ValueError("invalid mock model budget fields")
 
 
 def risk_gate(intent, config, opening, current, wallet):
@@ -86,7 +103,8 @@ def run_market(directory, store, config, news, rounds):
     released = set()
     seen = []
     start = parse_time(config["start_at"])
-    reference = Decimal(config["pool_susd"]) / Decimal(config["pool_risk"])
+    reserve_ratio = Decimal(config["pool_susd"]) / Decimal(config["pool_risk"])
+    reference = Decimal(str(config.get("initial_reference", reserve_ratio)))
     with Anvil(directory) as chain:
         store.record("chain_started", source="anvil_rpc", client=chain.client, chain_id=chain.chain_id)
         market = Market(chain, store.record)

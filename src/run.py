@@ -5,12 +5,14 @@ import json
 from pathlib import Path
 import platform
 import re
+import signal
 import sys
 
 from .chain import ROOT
 from .events import EventStore, read_events, write_json
 from .experiment import run_market, validate_config, validate_news
 from .analytics import export_run
+from .report import report
 
 
 def main():
@@ -40,6 +42,10 @@ def main():
         "fixture_sha256": hashlib.sha256(fixture.read_bytes()).hexdigest(),
         "strategy_source_sha256": hashlib.sha256((ROOT / "src/agents.py").read_bytes()).hexdigest(),
     })
+    def interrupted(signum, _frame):
+        raise SystemExit(128 + signum)
+
+    previous_handler = signal.signal(signal.SIGTERM, interrupted)
     try:
         with EventStore(directory) as store:
             try:
@@ -48,9 +54,12 @@ def main():
                 store.record("error", error=repr(exc))
                 raise
         export_run(directory, read_events(directory))
+        report(directory)
     except BaseException:
         print(f"Run evidence: {directory}", file=sys.stderr)
         raise
+    finally:
+        signal.signal(signal.SIGTERM, previous_handler)
     print(directory)
 
 

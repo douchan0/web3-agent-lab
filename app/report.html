@@ -18,7 +18,7 @@ section{background:var(--paper);border:1px solid var(--line);border-radius:12px;
 button,select{font:inherit;background:#fff;color:var(--ink);border:1px solid #a9bcc6;border-radius:6px;padding:5px 9px}
 button:not(:disabled){cursor:pointer}button:disabled{opacity:.55}
 #replay{flex:1;min-width:100px}
-#chart{display:block;width:100%;min-width:640px}
+#chart,#nav-chart{display:block;width:100%;min-width:640px}
 .scroll{overflow-x:auto}
 #event{max-width:100%}
 #event-summary{margin-top:12px;overflow-wrap:anywhere}
@@ -67,9 +67,15 @@ th,td{border-bottom:1px solid var(--line);padding:8px}
     <h2 id="assets-title">各角色资产</h2>
     <p id="assets-caption"></p>
     <div class="scroll"><table>
-      <thead><tr><th>角色</th><th>RISK</th><th>sUSD</th><th>参考价净值</th><th>未实现盈亏</th><th>全程成交</th><th>全程回撤</th></tr></thead>
+      <thead><tr><th>角色</th><th>RISK</th><th>sUSD</th><th>参考价净值</th><th>未实现盈亏</th><th>累计成交</th><th>最大回撤</th></tr></thead>
       <tbody id="positions"></tbody>
     </table></div>
+    <div class="legend" id="nav-legend"></div>
+    <div class="scroll"><svg id="nav-chart" viewBox="0 0 1000 185" aria-label="参考价净值曲线"></svg></div>
+  </section>
+  <section aria-labelledby="lesson-title">
+    <h2 id="lesson-title">链上概念</h2>
+    <p><a href="../../../docs/learning/onchain.md">账户、ERC-20、Gas、AMM、滑点与预言机</a></p>
   </section>
 </main>
 <script id="run-data" type="application/json">/* RUN_DATA */null</script>
@@ -99,6 +105,8 @@ for (const e of data.events) {
   grouped.get(e.round).push(e);
 }
 const svg = $('chart');
+const navSvg = $('nav-chart');
+const navColors = ['#168271', '#7759ad', '#af5b28', '#5472ae', '#a03854'];
 let cutoff = latest;
 let timer = null;
 $('title').textContent = `交易回放 · ${data.run}`;
@@ -115,13 +123,14 @@ function summarize(e) {
   if (e.kind === 'decision') return `${labels[e.role]} · ${e.intent.action} · ${e.intent.public_rationale}`;
   if (e.kind === 'risk') return `${labels[e.role]} · ${e.result}`;
   if (e.kind === 'swap_receipt') {
-    return `${labels[e.role]} · ${e.success ? '成交' : '回退'} · 区块 ${Number(e.receipt.blockNumber)} · ${e.gas_used} Gas`;
+    return `${labels[e.role]} · ${e.success ? '成交' : '回退'} · 区块 ${Number(e.receipt.blockNumber)} · ${e.gas_used} Gas` +
+      (e.success ? ` · 成交价 ${Number(e.price_susd_per_risk).toFixed(6)} · 含费冲击 ${e.impact_bps} bps` : '');
   }
   if (e.kind === 'setup_receipt') return `${e.operation} ${e.symbol ?? ''}`.trim();
   return labels[e.kind] ?? e.kind;
 }
 
-function shape(name, attrs, title) {
+function shape(name, attrs, title, target = svg) {
   const element = document.createElementNS('http://www.w3.org/2000/svg', name);
   for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
   if (title) {
@@ -129,13 +138,21 @@ function shape(name, attrs, title) {
     label.textContent = title;
     element.append(label);
   }
-  svg.append(element);
+  target.append(element);
   return element;
 }
 
 function annotation(node, caption, eventId) {
   node.setAttribute('role', 'button');
   node.setAttribute('aria-label', caption);
+  node.setAttribute('tabindex', '0');
+  node.addEventListener('focus', () => { $('tooltip').textContent = caption; });
+  node.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      showEvent(eventId, true);
+    }
+  });
   node.addEventListener('pointerenter', () => { $('tooltip').textContent = caption; });
   node.addEventListener('click', () => showEvent(eventId, true));
 }
@@ -170,7 +187,7 @@ function drawChart() {
     if (row.trades) {
       const color = Number(row.close) >= Number(row.open) ? '#168271' : '#b14f48';
       const width = Math.min(22, 888 / latest * .7);
-      const caption = `第 ${row.round} 轮 · ${row.trades} 笔 · 开 ${Number(row.open).toFixed(5)} · 收 ${Number(row.close).toFixed(5)}`;
+      const caption = `第 ${row.round} 轮 · ${row.trades} 笔 · 开 ${Number(row.open).toFixed(5)} · 收 ${Number(row.close).toFixed(5)} · 首笔 ${row.event_ids[0]}`;
       shape('line', {x1:px,x2:px,y1:y(row.high),y2:y(row.low),stroke:color});
       const bar = shape('rect', {x:px-width/2,y:Math.min(y(row.open),y(row.close)),width,
         height:Math.max(3,Math.abs(y(row.open)-y(row.close))),fill:color,'data-round':row.round}, caption);
@@ -184,7 +201,7 @@ function drawChart() {
     for (const row of series) {
       const found = grouped.get(row.round).filter(match);
       if (!found.length) continue;
-      const caption = found.map(e => `${e.id} · ${summarize(e)}`).join(' / ');
+      const caption = found.map(e => `${e.id} · ${summarize(e)}${e.tx_hash ? ' · ' + e.tx_hash : ''}`).join(' / ');
       const marker = shape('circle', {cx:x(row.round),cy:py,r:Math.min(5, 380/latest),
         fill:color,'data-kind':found[0].kind,'data-round':row.round}, caption);
       annotation(marker, caption, found[0].id);
@@ -226,17 +243,48 @@ function showEvent(id, focus = false) {
 }
 
 function drawPositions() {
-  $('assets-caption').textContent = `持仓与净值显示第 ${cutoff} 轮收盘，净值以参考价标记。成交与回撤列显示整轮实验结果。`;
+  $('assets-caption').textContent = `持仓与净值显示第 ${cutoff} 轮收盘，净值以参考价标记。累计成交与回撤计算至当前轮。`;
   $('positions').replaceChildren(...Object.entries(data.stats.roles).map(([role, stats]) => {
     const position = cutoff ? stats.positions[cutoff - 1] : null;
     const values = [labels[role], position && (Number(position.risk_raw)/1e18).toFixed(3),
       position && (Number(position.susd_raw)/1e18).toFixed(3),
       position && Number(position.nav).toFixed(3), position && Number(position.unrealized_pnl).toFixed(3),
-      stats.fills, (Number(stats.max_drawdown)*100).toFixed(2) + '%'];
+      position?.fills, position && (Number(position.max_drawdown)*100).toFixed(2) + '%'];
     const row = document.createElement('tr');
     for (const value of values) row.insertCell().textContent = value ?? '—';
     return row;
   }));
+}
+
+function drawNav() {
+  navSvg.replaceChildren();
+  const tracks = Object.entries(data.stats.roles).map(([role, stats], index) => ({
+    role, color: navColors[index],
+    values: [Number(stats.initial_nav), ...stats.positions.slice(0, cutoff).map(row => Number(row.nav))],
+  }));
+  $('nav-legend').replaceChildren(...tracks.map(track => {
+    const legend = document.createElement('span');
+    legend.textContent = labels[track.role];
+    legend.style.setProperty('--marker', track.color);
+    return legend;
+  }));
+  const values = tracks.flatMap(track => track.values);
+  const low = Math.min(...values);
+  const high = Math.max(...values);
+  const pad = Math.max(.25, (high - low) * .1);
+  const x = round => 84 + round * 888 / latest;
+  const y = value => 145 - (value - low + pad) * 124 / (high - low + 2 * pad);
+  for (let index = 0; index <= 3; index++) {
+    const value = low - pad + index * (high - low + 2 * pad) / 3;
+    shape('line', {x1:84,x2:972,y1:y(value),y2:y(value),stroke:'#d7e2e7'}, null, navSvg);
+    shape('text', {x:78,y:y(value)+4,'text-anchor':'end','font-size':12,fill:'#42586c'}, null, navSvg).textContent = value.toFixed(2);
+  }
+  for (const track of tracks) {
+    const points = track.values.map((value, round) => `${x(round)},${y(value)}`).join(' ');
+    shape('polyline', {points,fill:'none',stroke:track.color,'stroke-width':2,'data-role':track.role}, null, navSvg);
+  }
+  shape('text', {x:84,y:177,'font-size':12,fill:'#42586c'}, null, navSvg).textContent = '第 0 轮';
+  shape('text', {x:972,y:177,'text-anchor':'end','font-size':12,fill:'#42586c'}, null, navSvg).textContent = `第 ${latest} 轮`;
 }
 
 function redraw(value, selected) {
@@ -252,6 +300,7 @@ function redraw(value, selected) {
   showEvent(selected ?? preferred?.id ?? eventOptions(value)[0][0]);
   drawChart();
   drawPositions();
+  drawNav();
 }
 function stop() {
   clearInterval(timer);
@@ -274,6 +323,13 @@ $('next').addEventListener('click', () => { stop(); redraw(cutoff + 1); });
 $('event-round').addEventListener('change', e => showEvent(eventOptions(Number(e.target.value))[0][0]));
 $('event').addEventListener('change', e => showEvent(e.target.value));
 const firstFill = data.events.find(e => e.kind === 'swap_receipt' && e.success);
-redraw(latest, firstFill?.id);
+function linkedEvent() {
+  return lookup.has(location.hash.slice(1)) ? location.hash.slice(1) : undefined;
+}
+redraw(latest, linkedEvent() ?? firstFill?.id);
+window.addEventListener('hashchange', () => {
+  const id = linkedEvent();
+  if (id) { stop(); redraw(Math.max(cutoff, lookup.get(id).round), id); }
+});
 </script>
 </html>

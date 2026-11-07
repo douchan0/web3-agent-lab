@@ -6,7 +6,7 @@ import unittest
 from src.agents import Intent
 from src.analytics import candles
 from src.chain import ROOT, UNIT
-from src.experiment import parse_time, release_news, risk_gate, validate_news
+from src.experiment import parse_time, release_news, risk_gate, validate_config, validate_news
 
 
 class ProtocolTests(unittest.TestCase):
@@ -40,3 +40,13 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(first["event_ids"], ["a", "c"])
         self.assertEqual(Decimal(first["high"]), Decimal("1.2"))
         self.assertIsNone(second["open"])
+
+    def test_config_rejects_unrecognized_fields_before_snapshot(self):
+        config = json.loads((ROOT / "configs/experiment.json").read_text())
+        models = json.loads((ROOT / "configs/models.example.json").read_text())
+        validate_config(config, models)
+        with self.assertRaisesRegex(ValueError, "unrecognized"):
+            validate_config(dict(config, unexpected_field="example"), models)
+        models["models"]["mock-v1"]["unexpected_field"] = "example"
+        with self.assertRaisesRegex(ValueError, "budget"):
+            validate_config(config, models)

@@ -5,7 +5,7 @@ import json
 
 from .chain import ROOT, UNIT
 from .events import write_json
-from .execution import gas_cost
+from .execution import BPS, gas_cost
 
 
 def candles(events):
@@ -28,11 +28,12 @@ def candles(events):
 
 def summarize(events):
     stats = defaultdict(lambda: dict(orders=Counter(), risk=Counter(), fills=0, failed=0,
-                                     impact_total=0, fees=Counter(), gas=0, gas_used=0,
+                                     impact_total=0, slippage_total=Decimal(0), fees=Counter(), gas=0, gas_used=0,
                                      realized=Decimal(0), positions=[]))
     costs = dict(setup_gas_wei=0, swap_gas_wei=0, calls=0, input_tokens=0, output_tokens=0, cost_usd=Decimal(0))
     refs = {}
     lots = defaultdict(deque)
+    risk_quotes = {}
     for event in events:
         kind, role = event["kind"], event.get("role")
         if kind == "setup_receipt":
@@ -44,6 +45,8 @@ def summarize(events):
             costs["cost_usd"] += Decimal(event["usage"]["cost_usd"])
         elif kind == "risk":
             stats[role]["risk"][event["result"]] += 1
+            if event["result"] == "accepted":
+                risk_quotes[event["id"]] = Decimal(event["decision_quote_out_raw"])
         elif kind == "reference":
             refs[event["round"]] = Decimal(event["price"])
         elif kind == "round_open" and event["round"] == 1:
@@ -64,6 +67,8 @@ def summarize(events):
             entry["fills"] += 1
             entry["fees"][event["token_in"]] += int(event["fee_in_raw"])
             entry["impact_total"] += event["impact_bps"]
+            baseline = risk_quotes[event["risk_id"]]
+            entry["slippage_total"] += (baseline - Decimal(event["amount_out_raw"])) * BPS / baseline
             entry["realized"] += account_fill(lots[role], event)
         elif kind == "round_close":
             for actor, wallet in event["wallets"].items():
@@ -71,6 +76,7 @@ def summarize(events):
                 cost_basis = sum((quantity * price for quantity, price in lots[actor]), Decimal(0)) / UNIT
                 stats[actor]["positions"].append(dict(
                     round=event["round"], event_id=event["id"], nav=str(nav(wallet, ref)),
+                    fills=stats[actor]["fills"],
                     risk_raw=wallet["RISK"], susd_raw=wallet["sUSD"],
                     unrealized_pnl=str(Decimal(wallet["RISK"]) * ref / UNIT - cost_basis),
                 ))
@@ -78,6 +84,8 @@ def summarize(events):
         attempts = entry["orders"]["buy"] + entry["orders"]["sell"]
         entry["fill_rate"] = entry["fills"] / attempts if attempts else None
         entry["mean_impact_bps"] = entry.pop("impact_total") / entry["fills"] if entry["fills"] else None
+        slippage_total = entry.pop("slippage_total")
+        entry["mean_execution_slippage_bps"] = str(slippage_total / entry["fills"]) if entry["fills"] else None
         entry["realized_pnl"] = str(entry.pop("realized"))
         entry["fee_raw"] = {token: str(amount) for token, amount in entry.pop("fees").items()}
         entry["gas_wei"] = str(entry.pop("gas"))
@@ -88,6 +96,7 @@ def summarize(events):
                 value = Decimal(position["nav"])
                 peak = max(peak, value)
                 drawdown = max(drawdown, (peak - value) / peak)
+                position["max_drawdown"] = str(drawdown)
             entry["max_drawdown"] = str(drawdown)
     for key in ("setup_gas_wei", "swap_gas_wei", "cost_usd"):
         costs[key] = str(costs[key])
@@ -122,7 +131,7 @@ def export_run(directory, events):
     for filename, kinds in {
         "news.json": {"news"},
         "orders.json": {"decision", "risk"},
-        "receipts.json": {"setup_receipt", "swap_receipt"},
+        "receipts.json": {"setup_receipt", "swap_receipt", "swap_receipt_unreconciled"},
     }.items():
         write_json(directory / filename, [event for event in events if event["kind"] in kinds])
     write_json(directory / "prices.json", series)
