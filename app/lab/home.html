@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web3 Agent Lab · 实验总览</title>
+<link rel="stylesheet" href="/lab.css">
+<link rel="stylesheet" href="/home.css">
+<script type="module" src="/home.js"></script>
+</head>
+<body>
+<header class="top"><a class="brand" href="/">Web3 Agent Lab</a><nav aria-label="主导航"><a href="/" aria-current="page">总览</a><a href="/lab#market">市场回放</a><a href="/lab#labs">动手实验</a><a href="/lab#course">八周课程</a></nav></header>
+<main class="dashboard">
+<header class="intro">
+  <p class="eyebrow">本地教学实验室</p>
+  <h1>市场实验总览</h1>
+  <p>让交易角色在本地链买卖两种测试币，观察价格、余额和风控如何变化。</p>
+</header>
+<p id="dashboard-status" role="status">正在读取实验归档…</p>
+<section id="results" aria-labelledby="results-title" hidden>
+  <div class="section-head">
+    <div><p class="eyebrow">已完成的实验</p><h2 id="results-title">长程基准</h2></div>
+    <a id="results-link" class="primary">回放这组实验 <span aria-hidden="true">→</span></a>
+  </div>
+  <dl class="metrics">
+    <div><dt>市场轮次</dt><dd id="metric-rounds"></dd></div>
+    <div><dt>本地链成交</dt><dd id="metric-fills"></dd></div>
+    <div><dt>风控拒单</dt><dd id="metric-rejects"></dd></div>
+    <div><dt>模型 API 费用</dt><dd id="metric-cost"></dd></div>
+  </dl>
+  <p id="results-context" class="caption"></p>
+</section>
+<div class="dashboard-grid">
+  <section id="receipt-card" aria-labelledby="receipt-title" hidden>
+    <p class="eyebrow">从一笔交易开始</p>
+    <h2 id="receipt-title">看钱包怎么变</h2>
+    <p id="receipt-amount" class="exchange"></p>
+    <p id="receipt-context" class="caption"></p>
+    <a id="receipt-link">看回执与前后余额 <span aria-hidden="true">→</span></a>
+  </section>
+  <section id="runs-card" aria-labelledby="runs-title" hidden>
+    <p class="eyebrow">实验档案</p>
+    <h2 id="runs-title">选一组来看</h2>
+    <ul id="runs-list" class="run-list"></ul>
+  </section>
+</div>
+<div class="shortcuts" aria-label="继续探索">
+  <a href="/lab#labs"><strong>动手算一次兑换</strong><span>改输入量，看看能换回多少。</span></a>
+  <a href="/lab#welcome"><strong>了解实验怎么运作</strong><span>从样例新闻追到链上回执。</span></a>
+  <a href="/lab#course"><strong>从零学 Web3</strong><span>八周中文课程与练习。</span></a>
+</div>
+</main>
+<footer>仅使用本地测试资产 · <a href="/project/docs/user-manual.md">使用手册</a></footer>
+</body>
+</html>

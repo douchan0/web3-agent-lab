@@ -11,11 +11,12 @@ from urllib.parse import parse_qs, urlsplit
 
 from .analytics import candles, summarize
 from .chain import ROOT
+from .dashboard import dashboard
 from .reading import document
 
 RUNS = ROOT / "data/experiments"
 RUN_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}")
-STATIC = {"index.html", "lab.js", "lab.css", "math.mjs"}
+STATIC = {"index.html", "lab.js", "lab.css", "math.mjs", "home.js", "home.css"}
 PUBLIC_DOCS = {"docs/user-manual.md", "docs/reports/paired-order.md", "docs/reports/stage2-audit.md"}
 PUBLIC_CODE = {"src/experiment.py", "src/execution.py", "src/events.py", "src/analytics.py", "contracts/Market.sol"}
 PUBLIC_ARCHIVE = {"events.jsonl", "config.json", "story.md", "research.md", "report.md", "manifest.json", "status.json"}
@@ -165,9 +166,14 @@ class Handler(BaseHTTPRequestHandler):
         location = urlsplit(self.path)
         path = location.path
         try:
-            if path == "/" or path[1:] in STATIC:
-                file = path[1:] or "index.html"
+            if path in ("/", "/lab") or path[1:] in STATIC:
+                legacy_query = parse_qs(location.query).keys() & {"run", "event"}
+                file = ("index.html" if legacy_query else "home.html") if path == "/" else path[1:]
+                if file == "lab":
+                    file = "index.html"
                 self.send_path(ROOT / "app/lab" / file)
+            elif path == "/api/dashboard":
+                self.send_json(dashboard(RUNS, RUN_ID))
             elif path == "/api/runs":
                 self.send_json(sorted(d.name for d in RUNS.iterdir()
                                       if RUN_ID.fullmatch(d.name) and not d.is_symlink()

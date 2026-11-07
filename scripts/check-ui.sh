@@ -11,6 +11,16 @@ trap 'ab close >/dev/null 2>&1 || :; kill "$pid" 2>/dev/null || :; wait "$pid" 2
 for i in 1 2 3 4 5 6 7 8 9 10; do test -s "$scratch/server" && break; sleep .2; done
 url=$(head -1 "$scratch/server")
 ab open "$url"
+ab set viewport 1366 900
+ab wait '#results:not([hidden])'
+ab get text '#metric-rounds' | rg '^1,000$'
+ab get text '#metric-fills' | rg '^1,219$'
+ab get text '#metric-rejects' | rg '^629$'
+ab get text '#metric-cost' | rg '^\$0$'
+ab get text '#receipt-amount' | rg '18 RISK.*17.913852 sUSD'
+ab click '#receipt-link'
+ab wait --text '267.91385180155692594'
+ab open "$url/lab?run=first-100#market"
 ab wait '#chart [data-round="100"]'
 test "$(ab get count '#chart [data-round]')" = 100
 ab click '#chart [data-round="1"]'

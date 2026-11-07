@@ -8,14 +8,14 @@
 <script type="module" src="/lab.js"></script>
 </head>
 <body>
-<header class="top"><a class="brand" href="#welcome">Web3 Agent Lab</a><nav aria-label="主导航"><a href="#welcome">实验室地图</a><a href="#market">市场回放</a><a href="#evidence">链上证据</a><a href="#labs">数学实验</a><a href="#course">八周课程</a></nav></header>
+<header class="top"><a class="brand" href="/">Web3 Agent Lab</a><nav aria-label="主导航"><a href="/">总览</a><a href="#welcome">实验室地图</a><a href="#market">市场回放</a><a href="#evidence">链上证据</a><a href="#labs">数学实验</a><a href="#course">八周课程</a></nav></header>
 <main>
 <section id="welcome" class="hero">
 <p class="eyebrow">本地实验链 · 中文课程 · 交易证据</p>
 <h1>从一笔交易看懂 Web3</h1>
 <p class="lead">让几个交易角色在本机买卖，看价格如何随池子里的两种测试币改变。跟着时间轴，从一条样例新闻找到决策、风控和真实的 Anvil 交易回执。</p>
 <p>钱包是持有资产的账户。<strong>RISK</strong> 是实验中的风险代币，<strong>sUSD</strong> 是记账用的测试币。智能合约是在链上执行的程序，交易池用两种代币的储备算出兑换数量。本地链让每一步都可复查，资产没有真实价值。</p>
-<a class="primary" href="/?run=first-100#market">打开 100 轮回放</a> <a href="#lab-amm">先做一次兑换预测 →</a>
+<a class="primary" href="/lab?run=first-100#market">打开 100 轮回放</a> <a href="#lab-amm">先做一次兑换预测 →</a>
 <div id="map" aria-label="实验数据流"></div>
 <div id="map-detail" class="inset" aria-live="polite"></div>
 </section>
@@ -69,25 +69,25 @@
 <label>输入储备 <input name="reserve-in" value="10000" inputmode="decimal" required></label>
 <label>输出储备 <input name="reserve-out" value="10000" inputmode="decimal" required></label>
 <label>输入量 <input name="amount" value="18" inputmode="decimal" required></label><button>计算兑换</button>
-<output aria-live="polite"></output><a href="/?run=first-100&event=E000067#evidence">核对深池真实回执</a>
+<output aria-live="polite"></output><a href="/lab?run=first-100&event=E000067#evidence">核对深池真实回执</a>
 </form>
 <form id="lab-depth" class="inset experiment">
 <h3>2. 流动性与价格冲击</h3><p>在同样的起始价格下，比较 10,000 与 3,000 储备的池。</p>
 <label>先预测 <select name="prediction" required><option value="">选择</option><option value="deep">深池到账多</option><option value="shallow">浅池到账多</option><option value="equal">一样多</option></select></label>
 <label>输入量 <input name="amount" value="18" inputmode="decimal" required></label><button>比较深浅池</button>
-<output aria-live="polite"></output><a href="/?run=shallow-10&event=E000067#evidence">核对浅池真实回执</a>
+<output aria-live="polite"></output><a href="/lab?run=shallow-10&event=E000067#evidence">核对浅池真实回执</a>
 </form>
 <form id="lab-info" class="inset experiment">
 <h3>3. 信息到达与套利</h3><p>N01 第 1 轮已发表，到第 2 轮才可见。池价假设固定为 1。猜角色如何处理。</p>
 <label>先预测 <select name="prediction" required><option value="">选择</option><option value="buy">买入</option><option value="sell">卖出</option><option value="hold">观望</option></select></label>
 <label>查看轮次 <select name="turn"><option>1</option><option selected>2</option></select></label><button>检查信息集</button>
-<output aria-live="polite"></output><a href="/?run=first-100&event=E000071#evidence">核对 N01 样例</a>
+<output aria-live="polite"></output><a href="/lab?run=first-100&event=E000071#evidence">核对 N01 样例</a>
 </form>
 <form id="lab-risk" class="inset experiment">
 <h3>4. 策略与风控</h3><p>按 10,000 初始储备、60 bps 单笔上限、250 钱包余额测试卖单。</p>
 <label>先预测 <select name="prediction" required><option value="">选择</option><option value="accepted">接受</option><option value="rejected">拒单</option></select></label>
 <label>卖出量 <input name="amount" value="90" inputmode="decimal" required></label><button>检查订单</button>
-<output aria-live="polite"></output><a href="/?run=first-100&event=E000087#evidence">核对一条风控记录</a>
+<output aria-live="polite"></output><a href="/lab?run=first-100&event=E000087#evidence">核对一条风控记录</a>
 </form>
 </div>
 </section>

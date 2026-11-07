@@ -39,3 +39,14 @@ class TeachingArchiveTests(unittest.TestCase):
             self.assertEqual(len(journal.series()["rows"]),1)
             self.assertEqual(len(journal.series()["roles"]["trend"]),1)
             self.assertEqual(journal.round_events(2)[0]["id"],next_round[0]["id"])
+
+    def test_dashboard_shows_archived_results_and_real_sample(self):
+        from src.dashboard import dashboard
+        from src.lab import RUNS, RUN_ID
+
+        data = dashboard(RUNS, RUN_ID)
+        result = data["featured"]
+        self.assertEqual((result["rounds"], result["fills"], result["rejected"]), (1000, 1219, 629))
+        self.assertEqual(result["cost_usd"], "0")
+        self.assertEqual(data["sample"]["event"], "E000067")
+        self.assertEqual(data["sample"]["amount_out_raw"], "17913851801556925940")
