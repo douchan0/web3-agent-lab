@@ -1,6 +1,14 @@
 {
   "name": "web3-agent-lab",
   "private": true,
-  "engines": {"node": ">=22"},
-  "devDependencies": {"@foundry-rs/anvil": "1.5.1", "solc": "0.8.30"}
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@foundry-rs/anvil": "1.5.1",
+    "solc": "0.8.30"
+  },
+  "scripts": {
+    "compile": "node scripts/compile.cjs"
+  }
 }
