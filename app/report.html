@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web3 Agent Lab · 实验回放</title>
+<style>
+:root{color-scheme:light;--ink:#152634;--muted:#42586c;--paper:#fff;--line:#d7e2e7}
+*{box-sizing:border-box}
+body{margin:0;background:#f0f5f6;color:var(--ink);font:15px/1.6 system-ui,sans-serif}
+main{max-width:1200px;margin:auto;padding:30px 20px 50px}
+h1,h2{line-height:1.2;margin:.25em 0 .45em}
+header{margin-bottom:20px}
+header small{letter-spacing:.12em;color:#176359;font-weight:bold}
+p{margin:.4em 0;color:var(--muted)}
+a{color:#09665e}
+section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:16px 0}
+.controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+button,select{font:inherit;background:#fff;color:var(--ink);border:1px solid #a9bcc6;border-radius:6px;padding:5px 9px}
+button:not(:disabled){cursor:pointer}button:disabled{opacity:.55}
+#replay{flex:1;min-width:100px}
+#chart{display:block;width:100%;min-width:640px}
+.scroll{overflow-x:auto}
+#event{max-width:100%}
+#event-summary{margin-top:12px;overflow-wrap:anywhere}
+#raw{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f5f6;padding:12px;border-radius:6px}
+#tooltip{min-height:1.6em;color:#176359}
+#links button{margin:4px}
+table{width:100%;border-collapse:collapse;white-space:nowrap;text-align:left}
+th,td{border-bottom:1px solid var(--line);padding:8px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:4px}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;background:var(--marker);border-radius:50%;margin-right:5px}
+#chart [role=button]{cursor:pointer}
+</style>
+<main>
+  <header>
+    <small>WEB3 AGENT LAB / 本地实验</small>
+    <h1 id="title">交易回放</h1>
+    <p>Anvil · V2-style demo · mock 策略 · 样例新闻与合成参考价</p>
+    <p><a href="../../../app/index.html">实验档案</a> · <a href="report.md">本轮中文解读</a> · <a href="events.jsonl">原始 JSONL</a></p>
+  </header>
+  <section aria-labelledby="market-title">
+    <h2 id="market-title">RISK 价格</h2>
+    <p>单位 sUSD/RISK。K 线使用成功兑换的平均成交价，空轮无 K 线。虚线为合成参考价。</p>
+    <div class="controls">
+      <button id="previous" type="button">上一轮</button>
+      <button id="play" type="button">播放</button>
+      <button id="next" type="button">下一轮</button>
+      <label>速度 <select id="speed"><option value="1200">慢</option><option value="550" selected>中</option><option value="180">快</option></select></label>
+      <input id="replay" aria-label="回放轮次" type="range" min="0" step="1">
+      <output id="round" for="replay"></output>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="scroll"><svg id="chart" viewBox="0 0 1000 345" aria-label="K 线与轮次事件"></svg></div>
+    <div id="tooltip">悬停预览，点击标记或从下方选择事件查看证据。</div>
+  </section>
+  <section aria-labelledby="event-title">
+    <h2 id="event-title">事件证据</h2>
+    <div class="controls">
+      <label for="event-round">事件轮次</label><select id="event-round"></select>
+      <label for="event">事件</label><select id="event"></select>
+    </div>
+    <div id="event-summary" aria-live="polite"></div>
+    <div id="links"></div>
+    <details><summary>完整事件与回执 JSON</summary><pre id="raw"></pre></details>
+  </section>
+  <section aria-labelledby="assets-title">
+    <h2 id="assets-title">各角色资产</h2>
+    <p id="assets-caption"></p>
+    <div class="scroll"><table>
+      <thead><tr><th>角色</th><th>RISK</th><th>sUSD</th><th>参考价净值</th><th>未实现盈亏</th><th>全程成交</th><th>全程回撤</th></tr></thead>
+      <tbody id="positions"></tbody>
+    </table></div>
+  </section>
+</main>
+<script id="run-data" type="application/json">/* RUN_DATA */null</script>
+<script>
+'use strict';
+const data = JSON.parse(document.getElementById('run-data').textContent);
+const $ = id => document.getElementById(id);
+const lookup = new Map(data.events.map(e => [e.id, e]));
+const news = new Map(data.events.filter(e => e.kind === 'news').map(e => [e.news_id, e.id]));
+const latest = data.series.at(-1).round;
+const labels = {
+  trend:'趋势', event:'事件', contrarian:'逆向', background:'背景', arbitrage:'套利',
+  news:'新闻', decision:'决策', risk:'风控', swap_receipt:'链上回执', setup_receipt:'部署与准备',
+  market_open:'池开盘', reference:'参考价', round_open:'轮次开盘', round_close:'轮次收盘',
+};
+const categories = [
+  ['新闻','#7759ad', e => e.kind === 'news'],
+  ['下单','#5472ae', e => e.kind === 'decision' && e.intent.action !== 'hold'],
+  ['拒单','#af5b28', e => e.kind === 'risk' && !['accepted','hold'].includes(e.result)],
+  ['成交','#168271', e => e.kind === 'swap_receipt' && e.success && e.role !== 'arbitrage'],
+  ['套利','#244465', e => e.kind === 'swap_receipt' && e.success && e.role === 'arbitrage'],
+  ['回退','#a03854', e => e.kind === 'swap_receipt' && !e.success],
+];
+const grouped = new Map();
+for (const e of data.events) {
+  if (!grouped.has(e.round)) grouped.set(e.round, []);
+  grouped.get(e.round).push(e);
+}
+const svg = $('chart');
+let cutoff = latest;
+let timer = null;
+$('title').textContent = `交易回放 · ${data.run}`;
+$('replay').max = latest;
+for (const [name, color] of categories) {
+  const legend = document.createElement('span');
+  legend.textContent = name;
+  legend.style.setProperty('--marker', color);
+  $('legend').append(legend);
+}
+
+function summarize(e) {
+  if (e.kind === 'news') return `${e.news_id} · ${e.title}`;
+  if (e.kind === 'decision') return `${labels[e.role]} · ${e.intent.action} · ${e.intent.public_rationale}`;
+  if (e.kind === 'risk') return `${labels[e.role]} · ${e.result}`;
+  if (e.kind === 'swap_receipt') {
+    return `${labels[e.role]} · ${e.success ? '成交' : '回退'} · 区块 ${Number(e.receipt.blockNumber)} · ${e.gas_used} Gas`;
+  }
+  if (e.kind === 'setup_receipt') return `${e.operation} ${e.symbol ?? ''}`.trim();
+  return labels[e.kind] ?? e.kind;
+}
+
+function shape(name, attrs, title) {
+  const element = document.createElementNS('http://www.w3.org/2000/svg', name);
+  for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
+  if (title) {
+    const label = document.createElementNS(element.namespaceURI, 'title');
+    label.textContent = title;
+    element.append(label);
+  }
+  svg.append(element);
+  return element;
+}
+
+function annotation(node, caption, eventId) {
+  node.setAttribute('role', 'button');
+  node.setAttribute('aria-label', caption);
+  node.addEventListener('pointerenter', () => { $('tooltip').textContent = caption; });
+  node.addEventListener('click', () => showEvent(eventId, true));
+}
+
+function drawChart() {
+  svg.replaceChildren();
+  const series = data.series.filter(row => row.round <= cutoff);
+  const x = round => 84 + (round - .5) * 888 / latest;
+  const priceRange = series.flatMap(row => [row.reference, row.high, row.low].filter(value => value !== null).map(Number));
+  let min = 1, max = 1;
+  for (const price of priceRange) {
+    min = Math.min(price, min);
+    max = Math.max(price, max);
+  }
+  const pad = Math.max(.002, (max - min) * .1);
+  min -= pad;
+  max += pad;
+  const y = price => 228 - (Number(price) - min) * 205 / (max - min);
+  for (let i = 0; i <= 4; i++) {
+    const price = min + i * (max - min) / 4;
+    shape('line', {x1:84,x2:972,y1:y(price),y2:y(price),stroke:'#d7e2e7'});
+    shape('text', {x:78,y:y(price)+4,'text-anchor':'end','font-size':12,fill:'#42586c'}).textContent = price.toFixed(4);
+  }
+  shape('polyline', {points:series.map(row => `${x(row.round)},${y(row.reference)}`).join(' '),
+    fill:'none',stroke:'#5472ae','stroke-width':1.6,'stroke-dasharray':'5 4'});
+  const tickStep = Math.max(1, Math.ceil(latest / 10));
+  for (const row of series) {
+    const px = x(row.round);
+    if (row.round === 1 || row.round % tickStep === 0) {
+      shape('text', {x:px,y:342,'text-anchor':'middle','font-size':11,fill:'#42586c'}).textContent = row.round;
+    }
+    if (row.trades) {
+      const color = Number(row.close) >= Number(row.open) ? '#168271' : '#b14f48';
+      const width = Math.min(22, 888 / latest * .7);
+      const caption = `第 ${row.round} 轮 · ${row.trades} 笔 · 开 ${Number(row.open).toFixed(5)} · 收 ${Number(row.close).toFixed(5)}`;
+      shape('line', {x1:px,x2:px,y1:y(row.high),y2:y(row.low),stroke:color});
+      const bar = shape('rect', {x:px-width/2,y:Math.min(y(row.open),y(row.close)),width,
+        height:Math.max(3,Math.abs(y(row.open)-y(row.close))),fill:color,'data-round':row.round}, caption);
+      annotation(bar, caption, row.event_ids[0]);
+    }
+  }
+  categories.forEach(([name, color, match], index) => {
+    const py = 243 + index * 14;
+    shape('text', {x:76,y:py+4,'text-anchor':'end','font-size':10,fill:'#42586c'}).textContent = name;
+    shape('line', {x1:84,x2:972,y1:py,y2:py,stroke:'#edf2f4'});
+    for (const row of series) {
+      const found = grouped.get(row.round).filter(match);
+      if (!found.length) continue;
+      const caption = found.map(e => `${e.id} · ${summarize(e)}`).join(' / ');
+      const marker = shape('circle', {cx:x(row.round),cy:py,r:Math.min(5, 380/latest),
+        fill:color,'data-kind':found[0].kind,'data-round':row.round}, caption);
+      annotation(marker, caption, found[0].id);
+    }
+  });
+}
+
+function options(select, entries, value) {
+  select.replaceChildren(...entries.map(([key, label]) => new Option(label, key)));
+  if (value !== undefined) select.value = value;
+}
+function eventOptions(round) {
+  return (grouped.get(round) ?? []).filter(e => !e.kind.endsWith('_broadcast')).map(e => [e.id, `${e.id} · ${summarize(e)}`]);
+}
+function showEvent(id, focus = false) {
+  const e = lookup.get(id);
+  if (!e || e.round > cutoff) return;
+  $('event-round').value = e.round;
+  options($('event'), eventOptions(e.round), id);
+  let summary = `${e.id} · 第 ${e.round} 轮 · ${summarize(e)}`;
+  if (e.tx_hash) summary += ` · ${e.tx_hash}`;
+  if (e.kind === 'news') summary += ` · ${e.source_url} · 发表 ${e.published_at} · 可见 ${e.available_at}`;
+  $('event-summary').textContent = summary;
+  $('raw').textContent = JSON.stringify(e, null, 2);
+  const related = new Set([e.order_id, e.risk_id, ...((e.intent?.cited_news_ids ?? e.news_ids ?? []).map(id => news.get(id)))]);
+  for (const sibling of grouped.get(e.round)) {
+    if (sibling.order_id === e.id && ['risk','swap_receipt'].includes(sibling.kind)) related.add(sibling.id);
+    if (sibling.risk_id === e.id && sibling.kind === 'swap_receipt') related.add(sibling.id);
+  }
+  $('links').replaceChildren(...[...related].filter(id => id && lookup.has(id)).map(id => {
+    const target = lookup.get(id);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = `${id} · ${labels[target.kind] ?? target.kind}`;
+    button.addEventListener('click', () => showEvent(id));
+    return button;
+  }));
+  if (focus) $('event').focus();
+}
+
+function drawPositions() {
+  $('assets-caption').textContent = `持仓与净值显示第 ${cutoff} 轮收盘，净值以参考价标记。成交与回撤列显示整轮实验结果。`;
+  $('positions').replaceChildren(...Object.entries(data.stats.roles).map(([role, stats]) => {
+    const position = cutoff ? stats.positions[cutoff - 1] : null;
+    const values = [labels[role], position && (Number(position.risk_raw)/1e18).toFixed(3),
+      position && (Number(position.susd_raw)/1e18).toFixed(3),
+      position && Number(position.nav).toFixed(3), position && Number(position.unrealized_pnl).toFixed(3),
+      stats.fills, (Number(stats.max_drawdown)*100).toFixed(2) + '%'];
+    const row = document.createElement('tr');
+    for (const value of values) row.insertCell().textContent = value ?? '—';
+    return row;
+  }));
+}
+
+function redraw(value, selected) {
+  cutoff = value;
+  $('replay').value = value;
+  $('round').textContent = `${value} / ${latest}`;
+  $('previous').disabled = value === 0;
+  $('next').disabled = value === latest;
+  const allowed = Array.from({length:cutoff+1}, (_, round) => [round, round === 0 ? '部署与注资' : `第 ${round} 轮`]);
+  options($('event-round'), allowed, value);
+  const roundEvents = grouped.get(value);
+  const preferred = roundEvents.find(e => e.kind === 'swap_receipt') ?? roundEvents.find(e => e.kind === 'reference');
+  showEvent(selected ?? preferred?.id ?? eventOptions(value)[0][0]);
+  drawChart();
+  drawPositions();
+}
+function stop() {
+  clearInterval(timer);
+  timer = null;
+  $('play').textContent = '播放';
+}
+function play() {
+  if (cutoff === latest) redraw(0);
+  $('play').textContent = '暂停';
+  timer = setInterval(() => {
+    redraw(cutoff + 1);
+    if (cutoff === latest) stop();
+  }, Number($('speed').value));
+}
+$('play').addEventListener('click', () => timer ? stop() : play());
+$('speed').addEventListener('change', () => { if (timer) { stop(); play(); } });
+$('replay').addEventListener('input', e => { stop(); redraw(Number(e.target.value)); });
+$('previous').addEventListener('click', () => { stop(); redraw(cutoff - 1); });
+$('next').addEventListener('click', () => { stop(); redraw(cutoff + 1); });
+$('event-round').addEventListener('change', e => showEvent(eventOptions(Number(e.target.value))[0][0]));
+$('event').addEventListener('change', e => showEvent(e.target.value));
+const firstFill = data.events.find(e => e.kind === 'swap_receipt' && e.success);
+redraw(latest, firstFill?.id);
+</script>
+</html>
